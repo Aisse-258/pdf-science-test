@@ -1,0 +1,23 @@
+{
+  "name": "pdf-science-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "pdfreader.js",
+  "dependencies": {
+    "pdf-to-text": "^0.0.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aisse-258/pdf-science-test.git"
+  },
+  "author": "",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Aisse-258/pdf-science-test/issues"
+  },
+  "homepage": "https://github.com/Aisse-258/pdf-science-test#readme"
+}
