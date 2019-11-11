@@ -12,10 +12,19 @@ process.argv.slice(3).forEach(function(val, index, array) {
 				return console.log(err);
 		});
 		word_ext(CleanText.toLowerCase(), dictionary);
-		if (index == 0)
-			fs.writeFile(process.argv[2], JSON.stringify(dictionary), function(err){
-				if(err)
-					return console.log(err);
-			});
+		if (index == 0){
+			if(process.argv[2].slice(-5) != '.json'){
+				console.log('WARNING: Dictionary should be a .json file. '+process.argv[2]+' is not .json.');
+			}
+			if (fs.existsSync(process.argv[2])){
+				console.log('ERROR: File '+process.argv[2]+' is already exists.');
+			}
+			else{
+				fs.writeFile(process.argv[2], JSON.stringify(dictionary), function(err){
+					if(err)
+						return console.log(err);
+				});
+			}
+		}
 	});
 });
