@@ -26,7 +26,6 @@ var word_ext = function (data, dictionary) {
 		}
 		if (!reg_letter.test(data[i]) && reg_letter.test(data[i-1]) && !isRepeat){
 			if (mem){
-				console.log(mem,word);
 				word = mem + word;
 				mem = false;
 			}
