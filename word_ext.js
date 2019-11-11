@@ -4,7 +4,7 @@ function is_repeat (dictionary, word){
 			return true;
 	return false;
 }
-var reg_letter = /[^\d\s.,“”""''<>…|&√\^=_↔«»\\\/()@#\[\]—{}–\*$№/+%:;!‘’`\?]/;
+var reg_letter = /[^\d\s.,“”""''<>∈±−…|&√\^=_↔«»\\\/()@#\[\]—{}–\*$№/+%:;!‘’`\?]/;
 var first_word_pos = 0;
 var mem;
 var word_ext = function (data, dictionary) {
