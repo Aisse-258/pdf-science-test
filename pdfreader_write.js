@@ -3,7 +3,7 @@ var fs = require('fs');
 var word_ext = require('./word_ext.js');
 var clean_text = require('./clean_text.js');
 var dictionary = {};
-process.argv.slice(2).forEach(function(val, index, array) {
+process.argv.slice(3).forEach(function(val, index, array) {
 	pdfUtil.pdfToText(val, function(err, data) {
 		if (err) throw(err);
 		CleanText = clean_text(data);
@@ -13,7 +13,7 @@ process.argv.slice(2).forEach(function(val, index, array) {
 		});
 		word_ext(CleanText.toLowerCase(), dictionary);
 		if (index == 0)
-			fs.writeFile("dictionary.json", JSON.stringify(dictionary), function(err){
+			fs.writeFile(process.argv[2], JSON.stringify(dictionary), function(err){
 				if(err)
 					return console.log(err);
 			});
