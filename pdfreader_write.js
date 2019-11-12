@@ -16,6 +16,7 @@ process.argv.slice(3).forEach(function(val, index, array) {
 		if (err){
 			throw(err);
 		}
+		data = data.normalize('NFKC');
 		CleanText = clean_text(data);
 		fs.writeFileSync(val + "_text.txt", CleanText, function(err){
 			if(err)
