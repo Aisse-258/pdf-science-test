@@ -4,13 +4,13 @@ function is_repeat (dictionary, word){
 			return true;
 	return false;
 }
-var reg_letter = /[^\d\s.,“”""''<>∈±−…|&√\^=_↔«»\\\/()@#\[\]—{}–\*$№/+%:;!‘’`\?]/;
+var reg_letter = /[^\s“”—–′‘’`\u2190-\u2426\u2900-\u2aff\u0001-\u002c\u002e-\u0040\u00a1-\u00bf\u20a0-\u20b0\u2020-\u2027\u005b-\u0060\u007b-\u007e\u2100-\u214f]/;
 var first_word_pos = 0;
 var mem;
 var word_ext = function (data, dictionary) {
 	for (let i = 0; i < data.length; i++){
 		let word = data.slice(first_word_pos, i);
-		if (word == '-') {
+		if (/^-+$/.test(word)) {
 			continue;
 		}
 		else if (word[0] == '-'){
