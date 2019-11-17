@@ -13,14 +13,10 @@ process.argv.slice(4).forEach(function (val, index, array){
 });
 for (let i in dictionaries) {
     for (let j in dictionaries[i]) {
-        let exist = false;
-        for (let k in dictionary_union){
-            if (k == j) {
-                exist = true;
-                dictionary_union[k] = dictionary_union[k] + dictionaries[i][j];
-            }
+        if (j in dictionary_union){
+            dictionary_union[j] += dictionaries[i][j];
         }
-        if (!exist) {
+        else {
             dictionary_union[j] = dictionaries[i][j];
         }
     }
