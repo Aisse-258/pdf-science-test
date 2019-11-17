@@ -1,8 +1,11 @@
 var pdfUtil = require('pdf-to-text');
 var fs = require('fs');
-var word_ext = require('./word_ext.js');
+//var word_ext = require('./word_ext.js');
+var WordExt = require('./word_ext_match.js');
+//const Performance = require('perf_hooks').performance;
 var clean_text = require('./clean_text.js');
-var dictionary = {};
+//var dictionary = {};
+var Dictionary = {};
 var counter = 0;
 if(process.argv[2].slice(-5) != '.json'){
 	console.log('WARNING: Dictionary should be a .json file. '+process.argv[2]+' is not .json.');
@@ -18,14 +21,24 @@ process.argv.slice(3).forEach(function(val, index, array) {
 		}
 		data = data.normalize('NFKC');
 		CleanText = clean_text(data);
-		fs.writeFileSync(val + "_text.txt", CleanText, function(err){
+		fs.writeFileSync(val.slice(0,-4) + ".txt", CleanText, function(err){
 			if(err)
 				return console.log(err);
 		});
-		word_ext(CleanText.toLowerCase(), dictionary);
+		//let p = Performance.now();
+		WordExt(data.toLowerCase(), Dictionary);
+		//console.log(index,'\n',Performance.now() - p);
+		//p = Performance.now();
+		//word_ext(CleanText.toLowerCase(), dictionary);
+		//console.log(Performance.now() - p);
 		counter++;
 		if (counter == process.argv.slice(3).length){
-			fs.writeFile(process.argv[2], JSON.stringify(dictionary), function(err){
+			//fs.writeFile('di1'+process.argv[2], JSON.stringify(dictionary), function(err){
+			//	if(err){
+			//		return console.log(err);
+			//	}
+			//});
+			fs.writeFile(process.argv[2], JSON.stringify(Dictionary), function(err){
 				if(err){
 					return console.log(err);
 				}
