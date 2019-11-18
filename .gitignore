@@ -61,3 +61,7 @@ typings/
 .next
 *.txt
 *.pdf
+
+dist
+build
+_SpecRunner.html
