@@ -6,7 +6,36 @@
   "dependencies": {
     "pdf-to-text": "^0.0.7"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "bootstrap": "^3.3.7",
+    "browserify": "^13.1.1",
+    "cheerio": "^1.0.0-rc.2",
+    "grunt": "^1.0.1",
+    "grunt-browserify": "^5.2.0",
+    "grunt-cli": "^1.2.0",
+    "grunt-concurrent": "^2.3.1",
+    "grunt-contrib-compress": "^1.4.1",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-htmlmin": "^2.0.0",
+    "grunt-contrib-jasmine": "^1.1.0",
+    "grunt-contrib-watch": "^1.0.0",
+    "grunt-eslint": "^19.0.0",
+    "grunt-newer": "^1.2.0",
+    "grunt-node-qunit": "^2.0.2",
+    "iconv-lite": "^0.4.15",
+    "jasmine-jquery": "^2.1.1",
+    "jquery": "^3.2.1",
+    "jquery-browserify": "^1.8.1",
+    "jquery-with-bootstrap-for-browserify": "0.0.1-bs3.3.7",
+    "json-format": "^1.0.1",
+    "json-from-location-hash": "^0.2.0",
+    "katex": "^0.7.1",
+    "load-grunt-tasks": "^3.5.2",
+    "ls": "^0.2.1",
+    "mkdirp": "^0.5.1",
+    "qunit": "^0.9.1",
+    "time-grunt": "^1.4.0"
+  },
   "scripts": {
     "test": "npm test"
   },
