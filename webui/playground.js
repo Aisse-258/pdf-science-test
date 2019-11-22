@@ -1,7 +1,7 @@
 'use strict';
 
 var dictionary_union = require('../common/dictionary_union.js');
-var fileName = [];
+var $ = require('jquery-with-bootstrap-for-browserify');
 var DictionaryUnion;
 function readmultifiles(files, dictionaries) {
 	var reader = new FileReader();  
@@ -31,19 +31,21 @@ function codeLoad() {
 }
 
 function codeSave() {
-	//console.time('codeSave()');
-	//var encoding = document.getElementById('file-save-encoding').value;
 	var encoding = document.getElementById('span-save').value;
-	//var text = myCodeMirror.getValue().replace(/[\r]*[\n][\r]*/g, '\r\n');
 	var blob = new Blob([JSON.stringify(DictionaryUnion)], {type: 'application/json'});
+	var div = $('<div>', {
+		style : "border: 1px black solid; padding:5px; height: 200px; overflow:scroll;",
+		text : JSON.stringify(DictionaryUnion)
+	});
 	var a = $('<a>', {
 		download : 'dictionary-union.json',
 		href : URL.createObjectURL(blob),
 		html : '<button class="btn btn-default">Сохранить json-файл</button>',
+		id : 'save'
 	});
 	document.getElementById('span-save').innerHTML = '';
 	document.getElementById('span-save').appendChild(a[0]);
-	console.timeEnd('codeSave()');
+	document.getElementById('save').appendChild(div[0]);
 }
 
 function codeSaveDelayed() {
