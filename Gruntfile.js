@@ -241,12 +241,9 @@ module.exports = function(grunt) {
 	]);
 
 	grunt.registerTask('bundle', [
-		'newer:copy:codemirror',
 		'newer:copy:bootstrap',
 		'newer:copy:license',
 		'default',
-		'newer:copy:wrappers',
-		'compress',
 	]);
 
 	grunt.registerTask('default', [
