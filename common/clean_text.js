@@ -1,6 +1,5 @@
-var reg_letter = /[^\d\s.,“”""''<>…|&√\^=_↔«»\\\/()@#\[\]—{}–\*$№/+%:;!‘’`\?]/;
-var first_str_pos = 0;
 var clean_text = function(data) {
+    let first_str_pos = 0;
     let clean_data = '';
     for (let i = 0; i < data.length; i++){
         if (data[i] == '-' && data[i+1] == '\n'){
@@ -14,4 +13,12 @@ var clean_text = function(data) {
     }
     return clean_data;
 }
-module.exports = clean_text;
+var clean_with_replace = function (data) {
+    let clean_data = data.replace(/-\s+/g,'');
+    clean_data = clean_data.replace(/\s+/g,' ');
+    return clean_data;
+}
+module.exports = {
+    clean_text: clean_text,
+    clean_with_replace: clean_with_replace,
+};
