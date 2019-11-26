@@ -6,7 +6,7 @@ var ls = require('ls');
 var mkdirp = require('mkdirp');
 
 var exec = require('child_process').exec;
-
+var bcp = fs.readFileSync(require.resolve('browserify-common-prelude/dist/bcp.min.js'), 'utf-8');
 
 module.exports = function(grunt) {
 
@@ -49,6 +49,11 @@ module.exports = function(grunt) {
 					{ expand: true, src: ['node_modules/bootstrap/**'], dest: 'dist/webui/' },
 				]
 			},
+			pdfjs: {
+				files: [
+					{ expand: true, src: ['node_modules/pdfjs-dist/**'], dest: 'dist/webui/' },
+				]
+			},
 		},
 		uglify: {
 			options: {
@@ -63,7 +68,10 @@ module.exports = function(grunt) {
 		browserify: {
 			options: {
 				browserifyOptions: {
-					debug: true
+					debug: true,
+					devPrelude: true,
+					
+					//prelude: bcp
 				},
 			},
 			main: {
