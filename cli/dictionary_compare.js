@@ -1,8 +1,7 @@
 var pdfUtil = require('pdf-to-text');
 var fs = require('fs');
-//var word_ext = require('../common/word_ext.js');
 var WordExt = require('../common/word_ext_match.js');
-var clean_text = require('../common/clean_text.js');
+var clean_text = require('../common/clean_text.js').clean_with_replace;
 var dictionary = {};
 var dictionary_main = [];
 process.argv.slice(3).forEach(function (val, index, array){
@@ -15,8 +14,7 @@ pdfUtil.pdfToText(process.argv[2], function(err, data) {
         if(err)
             return console.log(err);
     });
-    //word_ext(CleanText.toLowerCase(), dictionary);
-    WordExt(data.toLowerCase(), dictionary);
+    WordExt(CleanText.toLowerCase(), dictionary);
     for (let i in dictionary){
         let exist = false;
         for (let j in dictionary_main){
