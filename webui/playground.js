@@ -1,9 +1,16 @@
 'use strict';
 
+var pdf = require('../common/read_pdf.js');
 var dictionary_union = require('../common/dictionary_union.js');
+var word_ext = require('../common/word_ext_match.js');
+var clean_text = require('../common/clean_text.js').clean_with_replace;
 var $ = require('jquery-with-bootstrap-for-browserify');
 var DictionaryUnion;
-function readmultifiles(files, dictionaries) {
+var dictionaries = [];
+var pdfs = [];
+var texts = [];
+var Dictionary = {};
+function uniteDictionaries(files, dictionaries) {
 	var reader = new FileReader();  
 	function readFile(index) {
 		if( index >= files.length ) return;
@@ -17,21 +24,78 @@ function readmultifiles(files, dictionaries) {
 		reader.onloadend = function(e) {
 			if (index == files.length-1){
 				DictionaryUnion = dictionary_union(dictionaries[0], dictionaries.slice(1));
-				codeSaveDelayed();
+				codeSaveDelayedJSON();
 			}
 		}
 	}
 	readFile(0);
 }
-function codeLoad() {
-	// Closure to capture the file information.
-	var dictionaries_f = document.getElementById('file-load').files;
-	var dictionaries = [];
-	readmultifiles(dictionaries_f, dictionaries);
+
+function createDictionary (files) {
+	var reader = new FileReader();  
+	function readFile(index) {
+		if( index >= files.length ) return;
+		var file = files[index];
+		reader.onload = function(e) {
+			var bin = e.target.result;
+			pdfs.push(bin);
+			readFile(index+1)
+		}
+		reader.readAsDataURL(file);
+		reader.onloadend = function(e) {
+			if (index == files.length-1){
+				
+				let counter = 0;
+				for (let i = 0; i < pdfs.length; i++){
+					pdf(pdfs[i], function(text){
+						counter++;
+						texts.push(clean_text(text));
+						word_ext(texts[i].toLowerCase(), Dictionary);
+						if (counter == pdfs.length){
+							codeSaveDelayedPDF();
+						}
+					});
+				}
+			}
+		}
+	}
+	readFile(0);
 }
 
-function codeSave() {
-	var encoding = document.getElementById('span-save').value;
+function codeLoadPDF() {
+	// Closure to capture the file information.
+	var FilesPdf = document.getElementById('file-load-pdf').files;
+	createDictionary(FilesPdf);
+}
+function codeLoadJSON() {
+	// Closure to capture the file information.
+	var FilesJSON = document.getElementById('file-load-json').files;
+	uniteDictionaries(FilesJSON, dictionaries);
+}
+window.codeLoadPDF = codeLoadPDF;
+window.codeLoadJSON = codeLoadJSON;
+
+document.getElementById('file-load-pdf').onchange = codeLoadPDF;
+document.getElementById('file-load-json').onchange = codeLoadJSON;
+
+function codeSavePDF() {
+	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
+	var div = $('<div>', {
+		style : "border: 1px black solid; padding:5px; height: 200px; overflow:scroll;",
+		text : JSON.stringify(Dictionary/*Union*/)
+	});
+	var a = $('<a>', {
+		download : 'dictionary.json',
+		href : URL.createObjectURL(blob),
+		html : '<button class="btn btn-default">Сохранить json-файл</button>',
+		id : 'save'
+	});
+	document.getElementById('span-save').innerHTML = '';
+	document.getElementById('span-save').appendChild(a[0]);
+	document.getElementById('save').append(div[0]);
+}
+
+function codeSaveJSON() {
 	var blob = new Blob([JSON.stringify(DictionaryUnion)], {type: 'application/json'});
 	var div = $('<div>', {
 		style : "border: 1px black solid; padding:5px; height: 200px; overflow:scroll;",
@@ -45,13 +109,15 @@ function codeSave() {
 	});
 	document.getElementById('span-save').innerHTML = '';
 	document.getElementById('span-save').appendChild(a[0]);
-	document.getElementById('save').appendChild(div[0]);
+	document.getElementById('save').append(div[0]);
+}
+function codeSaveDelayedPDF() {
+	setTimeout(codeSavePDF, 1);
 }
 
-function codeSaveDelayed() {
-	setTimeout(codeSave, 1);
+function codeSaveDelayedJSON() {
+	setTimeout(codeSaveJSON, 1);
 }
-
 /*var myCodeMirror = CodeMirror(document.getElementById('code-mirror-holder'), {
 	lineNumbers: true,
 });
@@ -83,7 +149,7 @@ function runcheck() {
 	console.timeEnd('runcheck()');
 }
 */
-document.getElementById('file-load').onchange = codeLoad;
+//document.getElementById('file-load').onchange = codeLoad;
 /*
 document.getElementById('runcheck').onclick = runcheck;
 

@@ -1,3 +1,4 @@
+<script src="node_modules/pdfjs-dist/build/pdf.js"></script>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,11 +8,18 @@
 <body style="height:100%; margin:10px;">
 	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
-	Загрузите PDF-файл:
+	Загрузите PDF-файлы:
 	<br>
 	<label class="btn btn-default btn-file">
 		Загрузить файл
-		<input type="file" id="file-load" multiple = "multiple" style="display:none;">
+		<input type="file" id="file-load-pdf" multiple = "multiple" style="display:none;">
+	</label>
+	<br>
+	Загрузите JSON-файлы:
+	<br>
+	<label class="btn btn-default btn-file">
+		Загрузить файл
+		<input type="file" id="file-load-json" multiple = "multiple" style="display:none;">
 	</label>
 	<script src="playground.js"></script>
 	<hr/>
