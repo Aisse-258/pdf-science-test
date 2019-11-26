@@ -4,7 +4,9 @@
   "description": "",
   "main": "pdfreader.js",
   "dependencies": {
-    "pdf-to-text": "^0.0.7"
+    "pdf-to-text": "^0.0.7",
+    "pdf-parse": "^1.1.1",
+    "pdfjs-dist": "^1.10.100"
   },
   "devDependencies": {
     "bootstrap": "^3.3.7",
