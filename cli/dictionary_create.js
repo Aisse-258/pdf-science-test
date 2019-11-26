@@ -1,5 +1,5 @@
 var fs = require('fs');
-var pdf = require('../pdf_data.js');
+var pdf = require('../common/pdf_data.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
 var word_ext = require('../common/word_ext_match.js');
 var pdfs = [];
