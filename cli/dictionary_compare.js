@@ -1,29 +1,29 @@
-var pdfUtil = require('pdf-to-text');
+require('pdfjs-dist/build/pdf.js');
+pdfjsLib = PDFJS;
+pdfjsLib.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.js';
+var pdf = require('../common/read_pdf.js');
 var fs = require('fs');
-var WordExt = require('../common/word_ext_match.js');
+var word_ext = require('../common/word_ext_match.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
-var dictionary = {};
-var dictionary_main = [];
-process.argv.slice(3).forEach(function (val, index, array){
-    dictionary_main.push(JSON.parse(fs.readFileSync(val, "utf-8")));
-});
-pdfUtil.pdfToText(process.argv[2], function(err, data) {
-    if (err) throw(err);
-    CleanText = clean_text(data);
-    fs.writeFileSync(process.argv[2].slice(0,-4) + ".txt", CleanText, function(err){
+var extra_words = require('../common/extra_words.js');
+var example_dicts = [];
+var current_dict = {};
+for (let i = 0; i < process.argv.slice(4).length; i++){
+    example_dicts.push(JSON.parse(fs.readFileSync(process.argv.slice(4)[i], "utf-8")));
+}
+pdf(pdfjsLib, fs.readFileSync(process.argv[2]), function(text){
+    text = text.normalize('NFKC');
+    fs.writeFileSync(process.argv[2].slice(0,-4) + ".txt", clean_text(text), function(err){
         if(err)
             return console.log(err);
     });
-    WordExt(CleanText.toLowerCase(), dictionary);
-    for (let i in dictionary){
-        let exist = false;
-        for (let j in dictionary_main){
-            if (i in dictionary_main[j]) {
-                exist = true;
-            }
+    word_ext(text.toLowerCase(), current_dict);
+    let repeat_count = process.argv[3];
+    let extraWords = extra_words(current_dict, example_dicts, repeat_count);
+    console.log('Not found:', extraWords.ExtraWords, 'Less than '+repeat_count+' repeats:', extraWords.RareWords);
+    fs.writeFile(process.argv[2].slice(0,-4) + "_dict.json", JSON.stringify(current_dict), function(err){
+        if(err){
+            return console.log(err);
         }
-        if (!exist){
-            console.log(i);
-        }
-    }
+    });
 });
