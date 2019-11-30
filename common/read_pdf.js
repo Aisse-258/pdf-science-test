@@ -1,13 +1,4 @@
-// If absolute URL from the remote server is provided, configure the CORS
-// header on that server.
-//var url = 'https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/examples/learning/helloworld.pdf';
-
-pdfjsLib = PDFJS;
-
-// The workerSrc property shall be specified.
-pdfjsLib.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.js';
-
-var readPdf = function(url, callback){
+var readPdf = function(pdfjsLib, url, callback){
     pdfjsLib.getDocument(url).then(function (pdf) {
         var pdfDocument = pdf;
         var pagesPromises = [];

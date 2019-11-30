@@ -1,5 +1,8 @@
 'use strict';
 
+require('pdfjs-dist/build/pdf.js');
+var pdfjsLib = PDFJS;
+pdfjsLib.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.js';
 var pdf = require('../common/read_pdf.js');
 var dictionary_union = require('../common/dictionary_union.js');
 var word_ext = require('../common/word_ext_match.js');
@@ -47,9 +50,9 @@ function createDictionary (files) {
 				
 				let counter = 0;
 				for (let i = 0; i < pdfs.length; i++){
-					pdf(pdfs[i], function(text){
+					pdf(pdfjsLib, pdfs[i], function(text){
 						counter++;
-						texts.push(clean_text(text));
+						texts.push(clean_text(text.normalize('NFKC')));
 						word_ext(texts[i].toLowerCase(), Dictionary);
 						if (counter == pdfs.length){
 							codeSaveDelayedPDF();
@@ -82,7 +85,7 @@ function codeSavePDF() {
 	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
 	var div = $('<div>', {
 		style : "border: 1px black solid; padding:5px; height: 200px; overflow:scroll;",
-		text : JSON.stringify(Dictionary/*Union*/)
+		text : JSON.stringify(Dictionary)
 	});
 	var a = $('<a>', {
 		download : 'dictionary.json',
