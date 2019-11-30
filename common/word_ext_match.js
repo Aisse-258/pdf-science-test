@@ -1,4 +1,4 @@
-var reg_word = /([^\s“”—–′‘’`\u0001-\u002c \u005b-\u0060 \u002e-\u0040 \u00a1-\u00bf \u007b-\u007e \u20a0-\u20b0 \u2020-\u2027 \u2100-\u214f \u2190-\u2426 \u2900-\u2aff]+)/g;
+var reg_word = /([^\s“”—–⁄′‘’`\u0001-\u002c \u005b-\u0060 \u002e-\u0040 \u00a1-\u00bf \u007b-\u007e \u20a0-\u20b0 \u2020-\u2027 \u2100-\u214f \u2190-\u2426 \u2900-\u2aff]+)/g;
 var word_ext = function(data, dictionary){
     let dict = data.match(reg_word);
     for (let i = 0; i < dict.length; i++) {
