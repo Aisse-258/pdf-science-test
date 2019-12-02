@@ -10,12 +10,8 @@ var readPdf = function(pdfjsLib, url, callback){
         }
 
         Promise.all(pagesPromises).then(function (pagesText) {
-            // Remove loading
-            //$("#loading-info").remove();
             var text = '';
-            // Render text
             for(var i = 0;i < pagesText.length;i++){
-                //$("#pdf-text").append("<div><h3>Page "+ (i + 1) +"</h3><p>"+pagesText[i]+"</p><br></div>")
                 text = text + pagesText[i];
             }
             callback(text);
