@@ -94,12 +94,11 @@ function codeSavePDF() {
 		id : 'save'
 	});
 	document.getElementById('span-save').innerHTML = '';
-	document.getElementById('span-save').appendChild(a[0]);
-	document.getElementById('save').append(div[0]);
+	document.getElementById('span-save').appendChild(a[0]).after(div[0]);
 }
 
 function codeSaveJSON() {
-	var blob = new Blob([JSON.stringify(DictionaryUnion)], {type: 'application/json'});
+	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
 	var div = $('<div>', {
 		style : "border: 1px black solid; padding:5px; height: 200px; overflow:scroll;",
 		text : JSON.stringify(DictionaryUnion)
@@ -111,8 +110,7 @@ function codeSaveJSON() {
 		id : 'save'
 	});
 	document.getElementById('span-save').innerHTML = '';
-	document.getElementById('span-save').appendChild(a[0]);
-	document.getElementById('save').append(div[0]);
+	document.getElementById('span-save').appendChild(a[0]).after(div[0]);
 }
 function codeSaveDelayedPDF() {
 	setTimeout(codeSavePDF, 1);
