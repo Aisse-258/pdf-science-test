@@ -17,8 +17,8 @@ var dictionary_create = function (files, dictionary_name) {
     }
     for (let i = 0; i < files.length; i++){
         pdf(pdfjsLib, fs.readFileSync(files[i]), function(text){
-            text = text.normalize('NFKC');
-            fs.writeFileSync(files[i].slice(0,-4) + ".txt", clean_text(text), function(err){
+            text = clean_text(text.normalize('NFKC'));
+            fs.writeFileSync(files[i].slice(0,-4) + ".txt", text, function(err){
                 if(err)
                     return console.log(err);
             });
