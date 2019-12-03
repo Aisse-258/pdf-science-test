@@ -9,11 +9,9 @@ var word_ext = require('../common/word_ext_match.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
 var $ = require('jquery-with-bootstrap-for-browserify');
 var DictionaryUnion;
-var dictionaries = [];
-var pdfs = [];
-var texts = [];
 var Dictionary = {};
-function uniteDictionaries(files, dictionaries) {
+function uniteDictionaries(files) {
+	let dictionaries = [];
 	var reader = new FileReader();  
 	function readFile(index) {
 		if( index >= files.length ) {
@@ -37,7 +35,9 @@ function uniteDictionaries(files, dictionaries) {
 }
 
 function createDictionary (files) {
-	var reader = new FileReader();  
+	let pdfs = [];
+	let texts = [];
+	let reader = new FileReader();
 	function readFile(index) {
 		if( index >= files.length ) {
 			return;
@@ -51,14 +51,14 @@ function createDictionary (files) {
 		reader.readAsDataURL(file);
 		reader.onloadend = function(e) {
 			if (index == files.length-1){
-				
-				let counter = 0;
 				for (let i = 0; i < pdfs.length; i++){
 					pdf(pdfjsLib, pdfs[i], function(text){
-						counter++;
-						texts.push(clean_text(text.normalize('NFKC')));
-						word_ext(texts[i].toLowerCase(), Dictionary);
-						if (counter == pdfs.length){
+						texts[i] = clean_text(text.normalize('NFKC'));
+						if (i == pdfs.length-1){
+							//внешний цикл проходит элементы по два раза, пока фиксим так
+							for(let j = 0; j < texts.length; j++){
+								word_ext(texts[j].toLowerCase(), Dictionary);
+							}
 							codeSaveDelayedPDF();
 						}
 					});
@@ -77,7 +77,7 @@ function codeLoadPDF() {
 function codeLoadJSON() {
 	// Closure to capture the file information.
 	var FilesJSON = document.getElementById('file-load-json').files;
-	uniteDictionaries(FilesJSON, dictionaries);
+	uniteDictionaries(FilesJSON);
 }
 window.codeLoadPDF = codeLoadPDF;
 window.codeLoadJSON = codeLoadJSON;
