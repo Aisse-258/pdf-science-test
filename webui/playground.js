@@ -16,7 +16,9 @@ var Dictionary = {};
 function uniteDictionaries(files, dictionaries) {
 	var reader = new FileReader();  
 	function readFile(index) {
-		if( index >= files.length ) return;
+		if( index >= files.length ) {
+			return;
+		}
 		var file = files[index];
 		reader.onload = function(e) {
 			var bin = e.target.result;
@@ -37,7 +39,9 @@ function uniteDictionaries(files, dictionaries) {
 function createDictionary (files) {
 	var reader = new FileReader();  
 	function readFile(index) {
-		if( index >= files.length ) return;
+		if( index >= files.length ) {
+			return;
+		}
 		var file = files[index];
 		reader.onload = function(e) {
 			var bin = e.target.result;
