@@ -47,7 +47,7 @@ function createDictionary (files) {
 			pdfs.push(bin);
 			readFile(index+1)
 		}
-		reader.readAsDataURL(file);
+		reader.readAsArrayBuffer(file);
 		reader.onloadend = function(e) {
 			if (index == files.length-1){
 				for (let i = 0; i < pdfs.length; i++){
