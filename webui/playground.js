@@ -8,7 +8,6 @@ var dictionary_union = require('../common/dictionary_union.js');
 var word_ext = require('../common/word_ext_match.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
 var $ = require('jquery-with-bootstrap-for-browserify');
-var DictionaryUnion;
 var Dictionary = {};
 function uniteDictionaries(files) {
 	let dictionaries = [];
@@ -26,7 +25,7 @@ function uniteDictionaries(files) {
 		reader.readAsText(file);
 		reader.onloadend = function(e) {
 			if (index == files.length-1){
-				DictionaryUnion = dictionary_union(dictionaries[0], dictionaries.slice(1));
+				Dictionary = dictionary_union(Dictionary, dictionaries);
 				codeSaveDelayedJSON();
 			}
 		}
@@ -105,7 +104,7 @@ function codeSaveJSON() {
 	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
 	var div = $('<div>', {
 		style : "border: 1px black solid; padding:5px; height: 200px; overflow:scroll;",
-		text : JSON.stringify(DictionaryUnion)
+		text : JSON.stringify(Dictionary)
 	});
 	var a = $('<a>', {
 		download : 'dictionary-union.json',
