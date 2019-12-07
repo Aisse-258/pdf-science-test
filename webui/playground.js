@@ -11,6 +11,7 @@ var dictionary_compare = require('../common/extra_words.js');
 var $ = require('jquery-with-bootstrap-for-browserify');
 var Dictionary = {};
 var dict_info;
+var rare_count = 0;
 var div = $(document.getElementById('compare-result'));
 function uniteDictionaries(files) {
 	let dictionaries = [];
@@ -73,13 +74,14 @@ function createDictionary (files) {
 
 function compareWithDictionary(file) {
 	let tmp_dict = {};
+	rare_count = 1 * $('#rare-less-than').val();
 	let reader = new FileReader();
 	reader.onload = function(e) {
 		var bin = e.target.result;
 		pdf(pdfjsLib, bin, function(text) {
 			text = clean_text(text.normalize('NFKC'));
 			word_ext(text.toLowerCase(), tmp_dict);
-			dict_info = dictionary_compare(tmp_dict, [Dictionary], 2);
+			dict_info = dictionary_compare(tmp_dict, [Dictionary], rare_count);
 			codeViewDictInfo();
 		});
 	}
@@ -137,7 +139,7 @@ function codeView() {
 	for (let i in dict_info.ExtraWords) {
 		str = str + i + '<br>';
 	}
-	str = str + '<h3>Встречается менее 2 раз:</h3><br>';
+	str = str + '<h3>Встречается менее ' + rare_count + ' раз:</h3><br>';
 	for (let i in dict_info.RareWords) {
 		str = str + i + '<br>';
 	}
