@@ -110,10 +110,6 @@ document.getElementById('file-load-compare').onchange = codeLoadCompare;
 
 function codeSavePDF() {
 	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
-	var div = $('<div>', {
-		style : "border: 1px black solid; padding:5px; height: 200px; overflow:scroll;",
-		text : JSON.stringify(Dictionary)
-	});
 	var a = $('<a>', {
 		download : 'dictionary.json',
 		href : URL.createObjectURL(blob),
@@ -121,15 +117,11 @@ function codeSavePDF() {
 		id : 'save'
 	});
 	document.getElementById('span-save').innerHTML = '';
-	document.getElementById('span-save').appendChild(a[0]).after(div[0]);
+	document.getElementById('span-save').appendChild(a[0]);
 }
 
 function codeSaveJSON() {
 	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
-	var div = $('<div>', {
-		style : "border: 1px black solid; padding:5px; height: 200px; overflow:scroll;",
-		text : JSON.stringify(Dictionary)
-	});
 	var a = $('<a>', {
 		download : 'dictionary-union.json',
 		href : URL.createObjectURL(blob),
@@ -137,7 +129,7 @@ function codeSaveJSON() {
 		id : 'save'
 	});
 	document.getElementById('span-save').innerHTML = '';
-	document.getElementById('span-save').appendChild(a[0]).after(div[0]);
+	document.getElementById('span-save').appendChild(a[0]);
 }
 
 function codeView() {
@@ -151,7 +143,6 @@ function codeView() {
 	}
 	document.getElementById('compare-result').innerHTML = str;
 }
-
 function codeSaveDelayedPDF() {
 	setTimeout(codeSavePDF, 1);
 }
