@@ -11,7 +11,7 @@ var extra_words = function (current_dict, example_dicts, repeat_count) {
         if (!exist){
             ext_words[i] = current_dict[i];
         }
-        if (current_dict[i] <= repeat_count) {
+        else if (current_dict[i] <= repeat_count) {
             rare_words[i] = current_dict[i];
         }
     }
