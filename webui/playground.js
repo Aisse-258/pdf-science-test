@@ -7,8 +7,11 @@ var pdf = require('../common/read_pdf.js');
 var dictionary_union = require('../common/dictionary_union.js');
 var word_ext = require('../common/word_ext_match.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
+var dictionary_compare = require('../common/extra_words.js');
 var $ = require('jquery-with-bootstrap-for-browserify');
 var Dictionary = {};
+var dict_info;
+var div = $(document.getElementById('compare-result'));
 function uniteDictionaries(files) {
 	let dictionaries = [];
 	var reader = new FileReader();  
@@ -68,6 +71,21 @@ function createDictionary (files) {
 	readFile(0);
 }
 
+function compareWithDictionary(file) {
+	let tmp_dict = {};
+	let reader = new FileReader();
+	reader.onload = function(e) {
+		var bin = e.target.result;
+		pdf(pdfjsLib, bin, function(text) {
+			text = clean_text(text.normalize('NFKC'));
+			word_ext(text.toLowerCase(), tmp_dict);
+			dict_info = dictionary_compare(tmp_dict, [Dictionary], 2);
+			codeViewDictInfo();
+		});
+	}
+	reader.readAsArrayBuffer(file);
+}
+
 function codeLoadPDF() {
 	// Closure to capture the file information.
 	var FilesPdf = document.getElementById('file-load-pdf').files;
@@ -78,11 +96,17 @@ function codeLoadJSON() {
 	var FilesJSON = document.getElementById('file-load-json').files;
 	uniteDictionaries(FilesJSON);
 }
+function codeLoadCompare() {
+	let file = document.getElementById('file-load-compare').files[0];
+	compareWithDictionary(file);
+}
 window.codeLoadPDF = codeLoadPDF;
 window.codeLoadJSON = codeLoadJSON;
+window.codeLoadCompare = codeLoadCompare;
 
 document.getElementById('file-load-pdf').onchange = codeLoadPDF;
 document.getElementById('file-load-json').onchange = codeLoadJSON;
+document.getElementById('file-load-compare').onchange = codeLoadCompare;
 
 function codeSavePDF() {
 	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
@@ -115,12 +139,29 @@ function codeSaveJSON() {
 	document.getElementById('span-save').innerHTML = '';
 	document.getElementById('span-save').appendChild(a[0]).after(div[0]);
 }
+
+function codeView() {
+	var str = '<h3>Не найдено в словаре:</h3><br>';
+	for (let i in dict_info.ExtraWords) {
+		str = str + i + '<br>';
+	}
+	str = str + '<h3>Встречается менее 2 раз:</h3><br>';
+	for (let i in dict_info.RareWords) {
+		str = str + i + '<br>';
+	}
+	document.getElementById('compare-result').innerHTML = str;
+}
+
 function codeSaveDelayedPDF() {
 	setTimeout(codeSavePDF, 1);
 }
 
 function codeSaveDelayedJSON() {
 	setTimeout(codeSaveJSON, 1);
+}
+
+function codeViewDictInfo() {
+	setTimeout(codeView, 1);
 }
 /*var myCodeMirror = CodeMirror(document.getElementById('code-mirror-holder'), {
 	lineNumbers: true,
