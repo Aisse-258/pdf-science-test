@@ -107,10 +107,10 @@ function fileLoad() {
 			FilesJSON.push(Files[i]);
 		}
 	}
-	if (FilesPdf){
+	if (FilesPdf[0]){
 		createDictionary(FilesPdf);
 	}
-	if (FilesJSON){
+	if (FilesJSON[0]){
 		addDictionary(FilesJSON);
 	}
 }
