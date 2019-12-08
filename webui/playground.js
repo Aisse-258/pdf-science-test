@@ -13,7 +13,7 @@ var Dictionary = {};
 var dict_info;
 var rare_count = 0;
 var div = $(document.getElementById('compare-result'));
-function uniteDictionaries(files) {
+function addDictionary(files) {
 	let dictionaries = [];
 	var reader = new FileReader();  
 	function readFile(index) {
@@ -30,7 +30,7 @@ function uniteDictionaries(files) {
 		reader.onloadend = function(e) {
 			if (index == files.length-1){
 				Dictionary = dictionary_union(Dictionary, dictionaries);
-				codeSaveDelayedJSON();
+				fileSaveDelayed();
 			}
 		}
 	}
@@ -62,7 +62,7 @@ function createDictionary (files) {
 							for(let j = 0; j < texts.length; j++){
 								word_ext(texts[j].toLowerCase(), Dictionary);
 							}
-							codeSaveDelayedPDF();
+							fileSaveDelayed();
 						}
 					});
 				}
@@ -88,44 +88,44 @@ function compareWithDictionary(file) {
 	reader.readAsArrayBuffer(file);
 }
 
-function codeLoadPDF() {
-	// Closure to capture the file information.
-	var FilesPdf = document.getElementById('file-load-pdf').files;
-	createDictionary(FilesPdf);
 }
-function codeLoadJSON() {
+
+function fileLoad() {
 	// Closure to capture the file information.
-	var FilesJSON = document.getElementById('file-load-json').files;
-	uniteDictionaries(FilesJSON);
+	let Files = document.getElementById('file-load').files;
+	let FilesPdf = [],
+		FilesJSON = [];
+	for (let i = 0; i < Files.length; i++) {
+		if (Files[i].name.slice(-4).toLowerCase() == ".pdf") {
+			FilesPdf.push(Files[i]);
+		}
+		else if (Files[i].name.slice(-5).toLowerCase() == ".json") {
+			FilesJSON.push(Files[i]);
+		}
+	}
+	if (FilesPdf){
+		createDictionary(FilesPdf);
+	}
+	if (FilesJSON){
+		addDictionary(FilesJSON);
+	}
 }
 function codeLoadCompare() {
 	let file = document.getElementById('file-load-compare').files[0];
 	compareWithDictionary(file);
 }
-window.codeLoadPDF = codeLoadPDF;
-window.codeLoadJSON = codeLoadJSON;
+window.fileLoad = fileLoad;
 window.codeLoadCompare = codeLoadCompare;
 
-document.getElementById('file-load-pdf').onchange = codeLoadPDF;
-document.getElementById('file-load-json').onchange = codeLoadJSON;
+document.getElementById('file-load').onchange = fileLoad;
 document.getElementById('file-load-compare').onchange = codeLoadCompare;
 
-function codeSavePDF() {
+
+
+function fileSave() {
 	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
 	var a = $('<a>', {
 		download : 'dictionary.json',
-		href : URL.createObjectURL(blob),
-		html : '<button class="btn btn-default">Сохранить json-файл</button>',
-		id : 'save'
-	});
-	document.getElementById('span-save').innerHTML = '';
-	document.getElementById('span-save').appendChild(a[0]);
-}
-
-function codeSaveJSON() {
-	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
-	var a = $('<a>', {
-		download : 'dictionary-union.json',
 		href : URL.createObjectURL(blob),
 		html : '<button class="btn btn-default">Сохранить json-файл</button>',
 		id : 'save'
@@ -145,12 +145,8 @@ function codeView() {
 	}
 	document.getElementById('compare-result').innerHTML = str;
 }
-function codeSaveDelayedPDF() {
-	setTimeout(codeSavePDF, 1);
-}
-
-function codeSaveDelayedJSON() {
-	setTimeout(codeSaveJSON, 1);
+function fileSaveDelayed() {
+	setTimeout(fileSave, 1);
 }
 
 function codeViewDictInfo() {
