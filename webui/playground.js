@@ -11,6 +11,7 @@ var dictionary_compare = require('../common/extra_words.js');
 var $ = require('jquery-with-bootstrap-for-browserify');
 var Dictionary = {};
 var dict_info;
+var tmp_dict = {};
 var rare_count = 0;
 var div = $(document.getElementById('compare-result'));
 function addDictionary(files) {
@@ -73,7 +74,6 @@ function createDictionary (files) {
 }
 
 function compareWithDictionary(file) {
-	let tmp_dict = {};
 	rare_count = 1 * $('#rare-less-than').val();
 	let reader = new FileReader();
 	reader.onload = function(e) {
@@ -82,12 +82,16 @@ function compareWithDictionary(file) {
 			text = clean_text(text.normalize('NFKC'));
 			word_ext(text.toLowerCase(), tmp_dict);
 			dict_info = dictionary_compare(tmp_dict, [Dictionary], rare_count);
-			codeViewDictInfo();
+			viewDictInfo();
 		});
 	}
 	reader.readAsArrayBuffer(file);
 }
 
+function compareReload () {
+	rare_count = 1 * $('#rare-less-than').val();
+	dict_info = dictionary_compare(tmp_dict, [Dictionary], rare_count);
+	viewDictInfo();
 }
 
 function fileLoad() {
@@ -110,17 +114,19 @@ function fileLoad() {
 		addDictionary(FilesJSON);
 	}
 }
-function codeLoadCompare() {
+
+function fileLoadCompare() {
 	let file = document.getElementById('file-load-compare').files[0];
 	compareWithDictionary(file);
 }
 window.fileLoad = fileLoad;
-window.codeLoadCompare = codeLoadCompare;
 
 document.getElementById('file-load').onchange = fileLoad;
-document.getElementById('file-load-compare').onchange = codeLoadCompare;
+window.fileLoadCompare = fileLoadCompare;
 
 
+document.getElementById('file-load-compare').onchange = fileLoadCompare;
+document.getElementById('compare-reload').onclick = compareReload;
 
 function fileSave() {
 	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
@@ -134,7 +140,7 @@ function fileSave() {
 	document.getElementById('span-save').appendChild(a[0]);
 }
 
-function codeView() {
+function view() {
 	var str = '<h3>Не найдено в словаре:</h3><br>';
 	for (let i in dict_info.ExtraWords) {
 		str = str + i + '<br>';
@@ -149,8 +155,8 @@ function fileSaveDelayed() {
 	setTimeout(fileSave, 1);
 }
 
-function codeViewDictInfo() {
-	setTimeout(codeView, 1);
+function viewDictInfo() {
+	setTimeout(view, 1);
 }
 /*var myCodeMirror = CodeMirror(document.getElementById('code-mirror-holder'), {
 	lineNumbers: true,
