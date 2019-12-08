@@ -122,10 +122,17 @@ function fileLoadCompare() {
 window.fileLoad = fileLoad;
 
 document.getElementById('file-load').onchange = fileLoad;
+function addToDictionary() {
+	let newWord = '' + $('#add-to-dictionary').val().toLowerCase();
+	Dictionary[newWord] = 1;
+	fileSave();
+}
+
 window.fileLoadCompare = fileLoadCompare;
 
 
 document.getElementById('file-load-compare').onchange = fileLoadCompare;
+document.getElementById('add-to-dictionary-btn').onclick = addToDictionary;
 document.getElementById('compare-reload').onclick = compareReload;
 
 function fileSave() {
