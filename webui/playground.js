@@ -124,7 +124,16 @@ window.fileLoad = fileLoad;
 document.getElementById('file-load').onchange = fileLoad;
 function addToDictionary() {
 	let newWord = '' + $('#add-to-dictionary').val().toLowerCase();
-	Dictionary[newWord] = 1;
+	let wordCount = 1 * $('#add-to-dictionary-count').val();
+	if (wordCount == 0) {
+		wordCount = 1;
+	}
+	if (newWord in Dictionary) {
+		Dictionary[newWord] += wordCount;
+	}
+	else {
+		Dictionary[newWord] = wordCount;
+	}
 	fileSave();
 }
 
