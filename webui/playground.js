@@ -75,6 +75,9 @@ function createDictionary (files) {
 
 function compareWithDictionary(file) {
 	rare_count = 1 * $('#rare-less-than').val();
+	if (rare_count == 0) {
+		rare_count = 2;
+	}
 	let reader = new FileReader();
 	reader.onload = function(e) {
 		var bin = e.target.result;
