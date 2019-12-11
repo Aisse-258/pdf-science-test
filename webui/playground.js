@@ -164,9 +164,11 @@ function view() {
 	for (let i in dict_info.ExtraWords) {
 		str = str + i + '<br>';
 	}
+	if (rare_count > 0) {
 	str = str + '<h3>Встречается менее ' + rare_count + ' раз:</h3><br>';
 	for (let i in dict_info.RareWords) {
 		str = str + i + '<br>';
+	}
 	}
 	document.getElementById('compare-result').innerHTML = str;
 }
