@@ -39,11 +39,6 @@ module.exports = function(grunt) {
 					},
 				]
 			},
-			codemirror: {
-				files: [
-					{ expand: true, src: ['node_modules/codemirror/**'], dest: 'dist/webui/' },
-				]
-			},
 			bootstrap: {
 				files: [
 					{ expand: true, src: ['node_modules/bootstrap/**'], dest: 'dist/webui/' },
@@ -186,16 +181,6 @@ module.exports = function(grunt) {
 					!err && publishResults('node', res, this.async());
 				},
 			},
-			/*Rules: {
-				//deps: 'ls',
-				code: './cli/cli.js',
-				tests: [
-					'./test/Rules.js',
-				],
-				done: function(err, res) {
-					!err && publishResults('node', res, this.async());
-				},
-			},*/
 		},
 		jasmine: {
             test: {
