@@ -20,7 +20,10 @@ pdf(pdfjsLib, fs.readFileSync(process.argv[2]), function(text){
     word_ext(text.toLowerCase(), current_dict);
     let repeat_count = process.argv[3];
     let extraWords = extra_words(current_dict, example_dicts, repeat_count);
-    console.log('Not found:', extraWords.ExtraWords, 'Less than '+repeat_count+' repeats:', extraWords.RareWords);
+    console.log('Not found:', extraWords.ExtraWords);
+    if(repeat_count > 0) {
+        console.log('Less than '+repeat_count+' repeats:', extraWords.RareWords);
+    }
     fs.writeFile(process.argv[2].slice(0,-4) + "_dict.json", JSON.stringify(current_dict), function(err){
         if(err){
             return console.log(err);
