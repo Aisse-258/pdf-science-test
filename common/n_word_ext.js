@@ -7,7 +7,7 @@ var n_word_ext = function(data, word_count){
     }
     reg_n_word = new RegExp('('+reg_n_word+')', 'g');
     while (found = reg_n_word.exec(data)) {
-        if (!/^-+\s/.test(found[0]) && !/\s-+$/.test(found[0])) {
+        if (!/^-+\s/.test(found[0]) && !/\s-+$/.test(found[0]) && !/\s-+\s/.test(found[0]) && !/^-+$/.test(found[0])) {
             if (found[0] in matches) {
                 matches[found[0]]++;
             }
