@@ -12,8 +12,8 @@ for (let i = 0; i < process.argv.slice(4).length; i++){
     example_dicts.push(JSON.parse(fs.readFileSync(process.argv.slice(4)[i], "utf-8")));
 }
 pdf(pdfjsLib, fs.readFileSync(process.argv[2]), function(text){
-    text = text.normalize('NFKC');
-    fs.writeFileSync(process.argv[2].slice(0,-4) + ".txt", clean_text(text), function(err){
+    text = clean_text(text.normalize('NFKC'));
+    fs.writeFileSync(process.argv[2].slice(0,-4) + ".txt", text, function(err){
         if(err)
             return console.log(err);
     });
