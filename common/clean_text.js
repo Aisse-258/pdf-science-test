@@ -14,8 +14,10 @@ var clean_text = function(data) {
     return clean_data;
 }
 var clean_with_replace = function (data) {
-    let clean_data = data.replace(/-\s+/g,'');
+    let clean_data = data.replace(/\s+-+\s+/g,' ^-^ ');
+    clean_data = clean_data.replace(/-\s+/g,'');
     clean_data = clean_data.replace(/\s+/g,' ');
+    clean_data = clean_data.replace(/\s\^-\^\s/g,' - ');
     return clean_data;
 }
 module.exports = {
