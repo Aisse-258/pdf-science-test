@@ -174,7 +174,9 @@ module.exports = function(grunt) {
 			Test1: {
 				code: './cli/dictionary_create.js',
 				tests: [
-					'./test/*.js',
+					'./test/dictionary_create_test.js',
+					'./test/two_word_ext_test.js',
+					'./test/n_word_ext_test.js',
 				],
 				done: function(err, res) {
 					!err && publishResults('node', res, this.async());
