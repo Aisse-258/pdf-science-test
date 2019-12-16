@@ -6,13 +6,13 @@ test("Extracting combinations of two words", function (){
     let str = '';
     let dict_ex = {};
     let dict_test = two_word_ext(str.toLowerCase());
-    assert.deepEqual(dict_ex, dict_test);
+    assert.deepEqual(dict_test, dict_ex);
 });
 test("", function (){
     let str = 'Ощущение';
     let dict_ex = {};
     let dict_test = two_word_ext(str.toLowerCase());
-    assert.deepEqual(dict_ex, dict_test);
+    assert.deepEqual(dict_test, dict_ex);
 });
 test("", function (){
     let str = 'Ощущение мира';
@@ -20,7 +20,7 @@ test("", function (){
         "ощущение мира":1
     };
     let dict_test = two_word_ext(str.toLowerCase());
-    assert.deepEqual(dict_ex, dict_test);
+    assert.deepEqual(dict_test, dict_ex);
 });
 test("", function (){
     let str = 'Ощущение мира, осмысленно';
@@ -28,7 +28,7 @@ test("", function (){
         "ощущение мира":1
     };
     let dict_test = two_word_ext(str.toLowerCase());
-    assert.deepEqual(dict_ex, dict_test);
+    assert.deepEqual(dict_test, dict_ex);
 });
 test("", function (){
     let str = 'Ощущение мира осмысленно';
@@ -36,7 +36,7 @@ test("", function (){
         "ощущение мира":1, "мира осмысленно":1
     };
     let dict_test = two_word_ext(str.toLowerCase());
-    assert.deepEqual(dict_ex, dict_test);
+    assert.deepEqual(dict_test, dict_ex);
 });
 test("", function (){
     childProcess.execSync('node ./cli/dictionary_create.js ./test/test1_dict.json ./test/test1.pdf');
@@ -51,6 +51,6 @@ test("", function (){
     };
     let text = fs.readFileSync('./test/test1.txt', "utf-8");
     let dict_test = two_word_ext(text.toLowerCase());
-    assert.deepEqual(dict_ex, dict_test);
+    assert.deepEqual(dict_test, dict_ex);
     childProcess.execSync('rm ./test/test1_dict.json ./test/test1.txt');
 });

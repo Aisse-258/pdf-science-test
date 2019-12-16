@@ -10,7 +10,7 @@ test("Creating dictionaries", function (){
         "идиота": 1, "утверждение": 1, "полностью": 1, "доказано": 1
     },
     dict_test = JSON.parse(fs.readFileSync('./test/test1_dict.json', "utf-8"));
-    assert.deepEqual(dict_ex, dict_test);
+    assert.deepEqual(dict_test, dict_ex);
     childProcess.execSync('rm ./test/test1_dict.json ./test/test1.txt');
 }
 );
@@ -23,6 +23,6 @@ test("", function (){
         "идиота": 1, "утверждение": 1, "полностью": 1, "доказано": 1
     },
     dict_test = JSON.parse(fs.readFileSync('./test/test2_dict.json', "utf-8"));
-    assert.deepEqual(dict_ex, dict_test);
+    assert.deepEqual(dict_test, dict_ex);
     childProcess.execSync('rm ./test/test2_dict.json ./test/test2.txt');
 });
