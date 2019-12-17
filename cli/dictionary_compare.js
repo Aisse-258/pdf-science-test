@@ -5,6 +5,7 @@ var pdf = require('../common/read_pdf.js');
 var fs = require('fs');
 var Dictionary = require('../common/Dictionary.js');
 var word_ext = require('../common/word_ext_match.js');
+var word_count = require('../common/word_count.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
 var extra_words = require('../common/extra_words.js');
 var example_dicts = [];
@@ -19,6 +20,7 @@ pdf(pdfjsLib, fs.readFileSync(process.argv[2]), function(text){
             return console.log(err);
     });
     word_ext(current_dict.text.toLowerCase(), current_dict.words);
+    current_dict.total_words = word_count(current_dict.words);
     let repeat_count = process.argv[3];
     let extraWords = extra_words(current_dict.words, example_dicts, repeat_count);
     console.log('Not found:', extraWords.ExtraWords);

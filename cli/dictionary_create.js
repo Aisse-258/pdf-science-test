@@ -5,6 +5,7 @@ var pdf = require('../common/read_pdf.js');
 var fs = require('fs');
 var Dictionary = require('../common/Dictionary.js');
 var word_ext = require('../common/word_ext_match.js');
+var word_count = require('../common/word_count.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
 var dictionary = new Dictionary();
 var counter = 0;
@@ -24,6 +25,7 @@ var dictionary_create = function (files, dictionary_name) {
                     return console.log(err);
             });
             word_ext(dictionary.text.toLowerCase(), dictionary.words);
+            dictionary.total_words = word_count(dictionary.words);
             counter++;
             if (counter == files.length){
                 fs.writeFile(dictionary_name, JSON.stringify(dictionary), function(err){
