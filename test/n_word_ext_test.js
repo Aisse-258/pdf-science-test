@@ -92,4 +92,9 @@ test("", function (){
     let dict_test = n_word_ext(text.toLowerCase(), 3);
     assert.deepEqual(dict_test, dict_ex);
 });
-childProcess.execSync('rm ./test/test1_dict.json ./test/test1.txt');
+try {
+    childProcess.execSync('rm ./test/test1_dict.json ./test/test1.txt');
+}
+catch (e) {
+    console.log(e);
+}
