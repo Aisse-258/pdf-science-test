@@ -12,11 +12,11 @@ var word_ext = function(data, dictionary){
             dict[i] = dict[i].slice(0,-1) + dict[i+1];
             dict.splice(i+1,1);
         }
-        if(!(dict[i] in dictionary)) {
-            dictionary[dict[i]] = 1;
+        if(!(dict[i] in dictionary.words)) {
+            dictionary.words[dict[i]] = 1;
         }
-        else if (dict[i] in dictionary){
-            dictionary[dict[i]]++;
+        else if (dict[i] in dictionary.words){
+            dictionary.words[dict[i]]++;
         }
     }
 };
