@@ -18,9 +18,9 @@ var dictionary_create = function (files, dictionary_name) {
         process.exit(1);
     }
     for (let i = 0; i < files.length; i++){
-        pdf(pdfjsLib, fs.readFileSync(files[i]), function(text){
-            dictionary.text = clean_text(text.normalize('NFKC'));
-            fs.writeFileSync(files[i].slice(0,-4) + ".txt", dictionary.text, function(err){
+        if (files[i].slice(-4) == '.txt') {
+            dictionary.text = clean_text(fs.readFileSync(files[i], 'utf-8').normalize('NFKC'));
+            fs.writeFileSync(files[i].slice(0,-4) + "_clean.txt", dictionary.text, function(err){
                 if(err)
                     return console.log(err);
             });
@@ -34,7 +34,26 @@ var dictionary_create = function (files, dictionary_name) {
                     }
                 });
             }
-        });
+        }
+        else {
+            pdf(pdfjsLib, fs.readFileSync(files[i]), function(text){
+                dictionary.text = clean_text(text.normalize('NFKC'));
+                fs.writeFileSync(files[i].slice(0,-4) + ".txt", dictionary.text, function(err){
+                    if(err)
+                        return console.log(err);
+                });
+                word_ext(dictionary.text.toLowerCase(), dictionary.words);
+                dictionary.total_words = word_count(dictionary.words);
+                counter++;
+                if (counter == files.length){
+                    fs.writeFile(dictionary_name, JSON.stringify(dictionary), function(err){
+                        if(err){
+                            return console.log(err);
+                        }
+                    });
+                }
+            });
+        }
     }
 }
 dictionary_create(process.argv.slice(3), process.argv[2]);
