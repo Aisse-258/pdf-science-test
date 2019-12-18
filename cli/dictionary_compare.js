@@ -14,7 +14,7 @@ var is_two_compatible = require('../common/is_two_compatible.js');
 var example_dicts = [];
 var current_dict = new Dictionary();
 for (let i = 0; i < process.argv.slice(4).length; i++){
-    example_dicts.push(JSON.parse(fs.readFileSync(process.argv.slice(4)[i], "utf-8")));
+    example_dicts.push(new Dictionary(JSON.parse(fs.readFileSync(process.argv.slice(4)[i], "utf-8"))));
 }
 pdf(pdfjsLib, fs.readFileSync(process.argv[2]), function(text){
     current_dict.text = clean_text(text.normalize('NFKC'));
