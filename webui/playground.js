@@ -79,8 +79,41 @@ function createDictionary (files) {
 	readFile(0);
 }
 
+function createDictionaryTxt(files) {
+	let texts = [];
+	let dictionaries = [];
+	var reader = new FileReader();  
+	function readFile(index) {
+		if( index >= files.length ) {
+			return;
+		}
+		var file = files[index];
+		reader.onload = function(e) {
+			var bin = e.target.result;
+			texts.push(bin);
+			readFile(index+1)
+		}
+		reader.readAsText(file);
+		reader.onloadend = function(e) {
+			if (index == files.length-1){
+				for(let i = 0; i < texts.length; i++){
+					dictionaries.push(new Dictionary({
+						text: clean_text(texts[i].normalize('NFKC'))
+					}));
+					word_ext(dictionaries[i].text.toLowerCase(), dictionaries[i].words);
+					dictionaries[i].total_words = word_count(dictionaries[i].words);
+				}
+				MainDictionary = dictionary_union(MainDictionary, dictionaries);
+				fileSaveDelayed();
+			}
+		}
+	}
+	readFile(0);
+}
+
 function compareWithDictionary(file) {
 	rare_count = 1 * $('#rare-less-than').val();
+	tmp_dict = new Dictionary({});
 	if (rare_count == 0) {
 		rare_count = 2;
 	}
@@ -97,6 +130,23 @@ function compareWithDictionary(file) {
 	reader.readAsArrayBuffer(file);
 }
 
+function compareTxtWithDictionary(file) {
+	rare_count = 1 * $('#rare-less-than').val();
+	tmp_dict = new Dictionary({});
+	if (rare_count == 0) {
+		rare_count = 2;
+	}
+	let reader = new FileReader();
+	reader.onload = function(e) {
+		var bin = e.target.result;
+		tmp_dict.text = clean_text(bin.normalize('NFKC'));
+		word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
+		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
+		viewDictInfo();
+	}
+	reader.readAsText(file);
+}
+
 function compareReload () {
 	rare_count = 1 * $('#rare-less-than').val();
 	dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
@@ -107,13 +157,17 @@ function fileLoad() {
 	// Closure to capture the file information.
 	let Files = document.getElementById('file-load').files;
 	let FilesPdf = [],
-		FilesJSON = [];
+		FilesJSON = [],
+		FilesTXT = [];
 	for (let i = 0; i < Files.length; i++) {
 		if (Files[i].name.slice(-4).toLowerCase() == ".pdf") {
 			FilesPdf.push(Files[i]);
 		}
 		else if (Files[i].name.slice(-5).toLowerCase() == ".json") {
 			FilesJSON.push(Files[i]);
+		}
+		else if (Files[i].name.slice(-4).toLowerCase() == ".txt") {
+			FilesTXT.push(Files[i]);
 		}
 	}
 	if (FilesPdf[0]){
@@ -122,11 +176,19 @@ function fileLoad() {
 	if (FilesJSON[0]){
 		addDictionary(FilesJSON);
 	}
+	if (FilesTXT[0]){
+		createDictionaryTxt(FilesTXT);
+	}
 }
 
 function fileLoadCompare() {
 	let file = document.getElementById('file-load-compare').files[0];
-	compareWithDictionary(file);
+	if (file.name.slice(-4) == '.pdf') {
+		compareWithDictionary(file);
+	}
+	else if (file.name.slice(-4) == '.txt') {
+		compareTxtWithDictionary(file);
+	}
 }
 window.fileLoad = fileLoad;
 
