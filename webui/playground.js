@@ -15,7 +15,7 @@ var extra_words = require('../common/extra_words.js');
 var word_count = require('../common/word_count.js');
 var $ = require('jquery-with-bootstrap-for-browserify');
 var MainDictionary = new Dictionary({});
-var dict_info;
+var dict_info, not_in_right_order = [], not_compatible = [];
 var tmp_dict = new Dictionary({});
 var rare_count = 0;
 function addDictionary(files) {
@@ -66,8 +66,12 @@ function createDictionary (files) {
 							//внешний цикл проходит элементы по два раза, пока фиксим так
 							for(let j = 0; j < texts.length; j++){
 								MainDictionary.text += texts[j];
-								word_ext(texts[j].toLowerCase(), MainDictionary.words);
-								MainDictionary.total_words = word_count(MainDictionary.words);
+								if (j == texts.length - 1){
+									word_ext(MainDictionary.text.toLowerCase(), MainDictionary.words);
+									MainDictionary.total_words = word_count(MainDictionary.words);
+									MainDictionary.two_words = two_word_ext(MainDictionary.text.toLowerCase());
+									MainDictionary.total_two_words = word_count(MainDictionary.two_words);
+								}
 							}
 							fileSaveDelayed();
 						}
@@ -102,6 +106,8 @@ function createDictionaryTxt(files) {
 					}));
 					word_ext(dictionaries[i].text.toLowerCase(), dictionaries[i].words);
 					dictionaries[i].total_words = word_count(dictionaries[i].words);
+					dictionaries[i].two_words = two_word_ext(dictionaries[i].text.toLowerCase());
+					dictionaries[i].total_two_words = word_count(dictionaries[i].two_words);
 				}
 				MainDictionary = dictionary_union(MainDictionary, dictionaries);
 				fileSaveDelayed();
@@ -123,7 +129,18 @@ function compareWithDictionary(file) {
 		pdf(pdfjsLib, bin, function(text) {
 			tmp_dict.text = clean_text(text.normalize('NFKC'));
 			word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
+			tmp_dict.total_words = word_count(tmp_dict.words);
+			tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
+			tmp_dict.total_two_words = word_count(tmp_dict.two_words);
 			dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
+			let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
+			let compatible = is_two_compatible(tmp_dict, MainDictionary);
+			for (let i in rightOrder) {
+				not_in_right_order.push(i);
+			}
+			for (let i in compatible) {
+				not_compatible.push(i);
+			}
 			viewDictInfo();
 		});
 	}
@@ -141,7 +158,18 @@ function compareTxtWithDictionary(file) {
 		var bin = e.target.result;
 		tmp_dict.text = clean_text(bin.normalize('NFKC'));
 		word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
+		tmp_dict.total_words = word_count(tmp_dict.words);
+		tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
+		tmp_dict.total_two_words = word_count(tmp_dict.two_words);
 		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
+		let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
+		let compatible = is_two_compatible(tmp_dict, MainDictionary);
+		for (let i in rightOrder) {
+			not_in_right_order.push(i);
+		}
+		for (let i in compatible) {
+			not_compatible.push(i);
+		}
 		viewDictInfo();
 	}
 	reader.readAsText(file);
@@ -244,14 +272,16 @@ function fileSave() {
 function view() {
 	var str = '<h3>Не найдено в словаре:</h3><br>';
 	for (let i in dict_info.ExtraWords) {
-		str = str + i + '<br>';
+		str += i + '<br>';
 	}
 	if (rare_count > 0) {
-	str = str + '<h3>Встречается менее ' + rare_count + ' раз:</h3><br>';
-	for (let i in dict_info.RareWords) {
-		str = str + i + '<br>';
+		str = str + '<h3>Встречается менее ' + rare_count + ' раз:</h3><br>';
+		for (let i in dict_info.RareWords) {
+			str += i + '<br>';
+		}
 	}
-	}
+	str += '<h3>Возможно стоят в неправильном порядке:</h3><br>' + not_in_right_order.join('<br>') + '<br>';
+	str += '<h3>Возможно несочитаемы:</h3><br>' + not_compatible.join('<br>');
 	document.getElementById('compare-result').innerHTML = str;
 }
 function fileSaveDelayed() {
