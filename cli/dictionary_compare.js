@@ -62,9 +62,9 @@ else {
     current_dict.two_words = two_word_ext(current_dict.text.toLowerCase());
     current_dict.total_two_words = word_count(current_dict.two_words);
     let repeat_count = process.argv[3];
-    let not_rigth_order = is_in_right_order(current_dict);
     let not_compatible = is_two_compatible(current_dict);
     let extraWords = extra_words(current_dict.words, example_dicts.words, repeat_count);
+    let not_rigth_order = is_in_right_order(current_dict, example_dicts);
     console.log('Not found:', extraWords.ExtraWords);
     if(repeat_count > 0) {
         console.log('Less than '+repeat_count+' repeats:', extraWords.RareWords);
