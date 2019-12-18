@@ -1,6 +1,4 @@
-var word_count = require('../common/word_count.js');
 var is_two_compatible = function(current_dictionary, ex_dict) {
-    ex_dict.total_two_words = word_count(ex_dict.two_words);
     let not_compatible = {};
     for (let A_B in current_dictionary.two_words) {
         if(A_B in ex_dict.two_words) {
