@@ -4,16 +4,20 @@ require('pdfjs-dist/build/pdf.js');
 var pdfjsLib = PDFJS;
 pdfjsLib.workerSrc = 'node_modules/pdfjs-dist/build/pdf.worker.js';
 var pdf = require('../common/read_pdf.js');
+var Dictionary = require('../common/Dictionary.js');
 var dictionary_union = require('../common/dictionary_union.js');
 var word_ext = require('../common/word_ext_match.js');
+var two_word_ext = require('../common/two_word_ext.js');
+var is_in_right_order = require('../common/is_in_right_order.js');
+var is_two_compatible = require('../common/is_two_compatible.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
-var dictionary_compare = require('../common/extra_words.js');
+var extra_words = require('../common/extra_words.js');
+var word_count = require('../common/word_count.js');
 var $ = require('jquery-with-bootstrap-for-browserify');
-var Dictionary = {};
+var MainDictionary = new Dictionary({});
 var dict_info;
-var tmp_dict = {};
+var tmp_dict = new Dictionary({});
 var rare_count = 0;
-var div = $(document.getElementById('compare-result'));
 function addDictionary(files) {
 	let dictionaries = [];
 	var reader = new FileReader();  
@@ -24,13 +28,13 @@ function addDictionary(files) {
 		var file = files[index];
 		reader.onload = function(e) {
 			var bin = e.target.result;
-			dictionaries.push(JSON.parse(bin));
+			dictionaries.push(new Dictionary(JSON.parse(bin)));
 			readFile(index+1)
 		}
 		reader.readAsText(file);
 		reader.onloadend = function(e) {
 			if (index == files.length-1){
-				Dictionary = dictionary_union(Dictionary, dictionaries);
+				MainDictionary = dictionary_union(MainDictionary, dictionaries);
 				fileSaveDelayed();
 			}
 		}
@@ -61,7 +65,9 @@ function createDictionary (files) {
 						if (i == pdfs.length-1){
 							//внешний цикл проходит элементы по два раза, пока фиксим так
 							for(let j = 0; j < texts.length; j++){
-								word_ext(texts[j].toLowerCase(), Dictionary);
+								MainDictionary.text += texts[j];
+								word_ext(texts[j].toLowerCase(), MainDictionary.words);
+								MainDictionary.total_words = word_count(MainDictionary.words);
 							}
 							fileSaveDelayed();
 						}
@@ -82,9 +88,9 @@ function compareWithDictionary(file) {
 	reader.onload = function(e) {
 		var bin = e.target.result;
 		pdf(pdfjsLib, bin, function(text) {
-			text = clean_text(text.normalize('NFKC'));
-			word_ext(text.toLowerCase(), tmp_dict);
-			dict_info = dictionary_compare(tmp_dict, [Dictionary], rare_count);
+			tmp_dict.text = clean_text(text.normalize('NFKC'));
+			word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
+			dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 			viewDictInfo();
 		});
 	}
@@ -93,7 +99,7 @@ function compareWithDictionary(file) {
 
 function compareReload () {
 	rare_count = 1 * $('#rare-less-than').val();
-	dict_info = dictionary_compare(tmp_dict, [Dictionary], rare_count);
+	dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 	viewDictInfo();
 }
 
@@ -131,11 +137,25 @@ function addToDictionary() {
 	if (wordCount == 0) {
 		wordCount = 1;
 	}
-	if (newWord in Dictionary) {
-		Dictionary[newWord] += wordCount;
+	if(newWord.split(' ').length == 1) {
+		if (newWord in MainDictionary.words) {
+			MainDictionary.words[newWord] += wordCount;
+			MainDictionary.total_words += wordCount;
+		}
+		else {
+			MainDictionary.words[newWord] = wordCount;
+			MainDictionary.total_words += wordCount;
+		}
 	}
-	else {
-		Dictionary[newWord] = wordCount;
+	else if (newWord.split(' ').length == 2) {
+		if (newWord in MainDictionary.two_words) {
+			MainDictionary.two_words[newWord] += wordCount;
+			MainDictionary.total_two_words += wordCount;
+		}
+		else {
+			MainDictionary.two_words[newWord] = wordCount;
+			MainDictionary.total_two_words += wordCount;
+		}
 	}
 	fileSave();
 }
@@ -148,7 +168,7 @@ document.getElementById('add-to-dictionary-btn').onclick = addToDictionary;
 document.getElementById('compare-reload').onclick = compareReload;
 
 function fileSave() {
-	var blob = new Blob([JSON.stringify(Dictionary)], {type: 'application/json'});
+	var blob = new Blob([JSON.stringify(MainDictionary)], {type: 'application/json'});
 	var a = $('<a>', {
 		download : 'dictionary.json',
 		href : URL.createObjectURL(blob),
