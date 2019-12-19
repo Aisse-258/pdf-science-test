@@ -281,7 +281,7 @@ function view() {
 		}
 	}
 	str += '<h3>Возможно стоят в неправильном порядке:</h3><br>' + not_in_right_order.join('<br>') + '<br>';
-	str += '<h3>Возможно несочитаемы:</h3><br>' + not_compatible.join('<br>');
+	str += '<h3>Возможно несочетаемы:</h3><br>' + not_compatible.join('<br>');
 	document.getElementById('compare-result').innerHTML = str;
 }
 function fileSaveDelayed() {
