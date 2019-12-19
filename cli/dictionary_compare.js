@@ -34,8 +34,6 @@ if (process.argv[2].slice(-4)=='.pdf') {
         current_dict.total_words = word_count(current_dict.words);
         current_dict.two_words = two_word_ext(current_dict.text.toLowerCase());
         current_dict.total_two_words = word_count(current_dict.two_words);
-        example_dicts.two_words = two_word_ext(example_dicts.text.toLowerCase());
-        example_dicts.total_two_words = word_count(example_dicts.two_words);
         let repeat_count = process.argv[3];
         let extraWords = extra_words(current_dict.words, example_dicts.words, repeat_count);
         let not_rigth_order = is_in_right_order(current_dict, example_dicts);
@@ -63,8 +61,6 @@ else {
     current_dict.total_words = word_count(current_dict.words);
     current_dict.two_words = two_word_ext(current_dict.text.toLowerCase());
     current_dict.total_two_words = word_count(current_dict.two_words);
-    example_dicts.two_words = two_word_ext(example_dicts.text.toLowerCase());
-    example_dicts.total_two_words = word_count(example_dicts.two_words);
     let repeat_count = process.argv[3];
     let extraWords = extra_words(current_dict.words, example_dicts.words, repeat_count);
     let not_rigth_order = is_in_right_order(current_dict, example_dicts);

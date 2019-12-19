@@ -6,6 +6,7 @@ var fs = require('fs');
 var Dictionary = require('../common/Dictionary.js');
 var word_ext = require('../common/word_ext_match.js');
 var word_count = require('../common/word_count.js');
+var two_word_ext = require('../common/two_word_ext.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
 var dictionary = new Dictionary();
 var counter = 0;
@@ -26,6 +27,8 @@ var dictionary_create = function (files, dictionary_name) {
             });
             word_ext(dictionary.text.toLowerCase(), dictionary.words);
             dictionary.total_words = word_count(dictionary.words);
+            dictionary.two_words = two_word_ext(dictionary.text.toLowerCase());
+            dictionary.total_two_words = word_count(dictionary.two_words);
             counter++;
             if (counter == files.length){
                 fs.writeFile(dictionary_name, JSON.stringify(dictionary), function(err){
@@ -44,6 +47,8 @@ var dictionary_create = function (files, dictionary_name) {
                 });
                 word_ext(dictionary.text.toLowerCase(), dictionary.words);
                 dictionary.total_words = word_count(dictionary.words);
+                dictionary.two_words = two_word_ext(dictionary.text.toLowerCase());
+                dictionary.total_two_words = word_count(dictionary.two_words);
                 counter++;
                 if (counter == files.length){
                     fs.writeFile(dictionary_name, JSON.stringify(dictionary), function(err){
