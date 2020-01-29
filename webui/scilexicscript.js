@@ -17,7 +17,7 @@ var $ = require('jquery-with-bootstrap-for-browserify');
 var MainDictionary = new Dictionary({});
 var dict_info, not_in_right_order = [], not_compatible = [];
 var tmp_dict = new Dictionary({});
-var rare_count = 0;
+var rare_count = 2;
 function addDictionary(files) {
 	let dictionaries = [];
 	var reader = new FileReader();  
@@ -120,7 +120,7 @@ function createDictionaryTxt(files) {
 function compareWithDictionary(file) {
 	rare_count = 1 * $('#rare-less-than').val();
 	tmp_dict = new Dictionary({});
-	if (rare_count == 0) {
+	if (rare_count <= 0) {
 		rare_count = 2;
 	}
 	let reader = new FileReader();
@@ -150,7 +150,7 @@ function compareWithDictionary(file) {
 function compareTxtWithDictionary(file) {
 	rare_count = 1 * $('#rare-less-than').val();
 	tmp_dict = new Dictionary({});
-	if (rare_count == 0) {
+	if (rare_count <= 0) {
 		rare_count = 2;
 	}
 	let reader = new FileReader();
@@ -177,6 +177,9 @@ function compareTxtWithDictionary(file) {
 
 function compareReload () {
 	rare_count = 1 * $('#rare-less-than').val();
+	if (rare_count <= 0) {
+		rare_count = 2;
+	}
 	dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 	viewDictInfo();
 }

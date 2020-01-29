@@ -70,8 +70,8 @@ module.exports = function(grunt) {
 				},
 			},
 			main: {
-				src: 'webui/playground.js',
-				dest: 'dist/webui/playground.js'
+				src: 'webui/scilexicscript.js',
+				dest: 'dist/webui/scilexicscript.js'
 			},
 		},
 /*
@@ -187,7 +187,7 @@ module.exports = function(grunt) {
 		jasmine: {
             test: {
                 src: [
-					'dist/webui/playground.js',
+					'dist/webui/scilexicscript.js',
 				],
                 options: {
                     vendor: [
@@ -197,7 +197,7 @@ module.exports = function(grunt) {
 						'dist/webui/node_modules/codemirror/lib/codemirror.js',
 						'dist/webui/node_modules/codemirror/mode/stex/stex.js',
 						'dist/webui/node_modules/codemirror/addon/runmode/runmode.js',
-						'dist/webui/playground.js',
+						'dist/webui/scilexicscript.js',
                     ],
                     specs: [
 						'test/webui/*.spec.js',
