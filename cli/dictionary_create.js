@@ -8,6 +8,7 @@ var word_ext = require('../common/word_ext_match.js');
 var word_count = require('../common/word_count.js');
 var two_word_ext = require('../common/two_word_ext.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
+var repair_broken_words = require('../common/repair_broken_words.js');
 var dictionary = new Dictionary();
 var counter = 0;
 var dictionary_create = function (files, dictionary_name) {
@@ -31,6 +32,7 @@ var dictionary_create = function (files, dictionary_name) {
             dictionary.total_two_words = word_count(dictionary.two_words);
             counter++;
             if (counter == files.length){
+                repair_broken_words(dictionary);
                 fs.writeFile(dictionary_name, JSON.stringify(dictionary), function(err){
                     if(err){
                         return console.log(err);
@@ -51,6 +53,7 @@ var dictionary_create = function (files, dictionary_name) {
                 dictionary.total_two_words = word_count(dictionary.two_words);
                 counter++;
                 if (counter == files.length){
+                    repair_broken_words(dictionary);
                     fs.writeFile(dictionary_name, JSON.stringify(dictionary), function(err){
                         if(err){
                             return console.log(err);
