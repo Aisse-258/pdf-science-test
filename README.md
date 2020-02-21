@@ -25,3 +25,10 @@ node cli/dictionary_union.js {dictionary_union_name.json} {dict1.json dict2.json
 node cli/dictionary_compare.js {mytext.pdf} {number} {dict1.json dict2.json ...}
 ```
 number = "rare" words count
+
+**Add word to dictionary**
+
+```
+node cli/add_to_dictionary.js {dictionary_name.json} {"word"} {number}
+```
+number = count of words to be added (affects the results of the program, recommended to be more than "rare" words count)
