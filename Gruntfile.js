@@ -172,7 +172,7 @@ module.exports = function(grunt) {
 
 		'node-qunit': {
 			Test1: {
-				code: './cli/dictionary_create.js',
+				code: './cli/create_dictionary.js',
 				tests: [
 					'./test/dictionary_create_test.js',
 					'./test/two_word_ext_test.js',

@@ -2,7 +2,7 @@ var childProcess = require('child_process');
 var n_word_ext = require('../common/n_word_ext.js');
 var fs = require('fs');
 QUnit.module("Test1");
-childProcess.execSync('node ./cli/dictionary_create.js ./test/test1_dict.json ./test/test1.pdf');
+childProcess.execSync('node ./cli/create_dictionary.js ./test/test1_dict.json ./test/test1.pdf');
 var text = fs.readFileSync('./test/test1.txt', "utf-8");
 test("Extracting combinations of n words", function (){
     let str = '';

@@ -39,7 +39,7 @@ test("", function (){
     assert.deepEqual(dict_test, dict_ex);
 });
 test("", function (){
-    childProcess.execSync('node ./cli/dictionary_create.js ./test/test1_dict.json ./test/test1.pdf');
+    childProcess.execSync('node ./cli/create_dictionary.js ./test/test1_dict.json ./test/test1.pdf');
     let dict_ex = {
         "реферат по": 1, "по математике": 1, "математике и": 1, "и философии": 1, "философии тема": 1, "почему не": 1, "не так": 1,
         "так уж": 1, "уж очевиден": 1, "очевиден двойной": 1, "двойной интеграл": 1, "рациональное число": 1,

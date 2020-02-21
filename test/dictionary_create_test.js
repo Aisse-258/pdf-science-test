@@ -3,7 +3,7 @@ var fs = require('fs');
 var Dictionary = require('../common/Dictionary.js');
 QUnit.module("Test1");
 test("Creating dictionaries", function (){
-    childProcess.execSync('node ./cli/dictionary_create.js ./test/test1_dict.json ./test/test1.pdf');
+    childProcess.execSync('node ./cli/create_dictionary.js ./test/test1_dict.json ./test/test1.pdf');
     var dict_ex = new Dictionary ({
         text: 'Реферат по математике и философии Тема: «Почему не так уж очевиден двойной интеграл?» Рациональное число восстанавливает гений. Закон исключенного третьего определяет эмпирический интеграл по поверхности. Гегельянство расточительно представляет собой минимум, таким образом сбылась мечта идиота - утверждение полностью доказано. ',
         words: {
@@ -24,7 +24,7 @@ test("Creating dictionaries", function (){
 }
 );
 test("", function (){
-    childProcess.execSync('node ./cli/dictionary_create.js ./test/test2_dict.json ./test/test2.pdf');
+    childProcess.execSync('node ./cli/create_dictionary.js ./test/test2_dict.json ./test/test2.pdf');
     var dict_ex = new Dictionary ({
         text: 'Реферат по математике и философии Тема: «Почему не так уж очевиден двойной интеграл?» Рациональное число восстанавливает гений. Закон исключенного третьего определяет эмпирический интеграл по поверхности. Гегельянство расточительно представляет собой минимум, таким образом сбылась мечта идиота - утверждение полностью доказано. ',
         words: {
