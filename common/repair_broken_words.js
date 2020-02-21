@@ -1,4 +1,3 @@
-var word_count = require('../common/word_count.js');
 var repair_broken_words = function (dictionary) {
     for (let twoWords in dictionary.two_words) {
         var maybeUnited = twoWords.split(' ')[0] + twoWords.split(' ')[1];
@@ -7,7 +6,6 @@ var repair_broken_words = function (dictionary) {
             dictionary.two_words[twoWords] = undefined;
         }
     }
-    dictionary.total_words = word_count(dictionary.words);
-    dictionary.total_two_words = word_count(dictionary.two_words);
+    dictionary.word_count();
 }
 module.exports = repair_broken_words;

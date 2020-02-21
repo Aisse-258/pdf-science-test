@@ -12,7 +12,6 @@ var is_in_right_order = require('../common/is_in_right_order.js');
 var is_two_compatible = require('../common/is_two_compatible.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
 var extra_words = require('../common/extra_words.js');
-var word_count = require('../common/word_count.js');
 var repair_broken_words = require('../common/repair_broken_words.js');
 var $ = require('jquery-with-bootstrap-for-browserify');
 var MainDictionary = new Dictionary({});
@@ -69,9 +68,7 @@ function createDictionary (files) {
 								MainDictionary.text += texts[j];
 								if (j == texts.length - 1){
 									word_ext(MainDictionary.text.toLowerCase(), MainDictionary.words);
-									MainDictionary.total_words = word_count(MainDictionary.words);
 									MainDictionary.two_words = two_word_ext(MainDictionary.text.toLowerCase());
-									MainDictionary.total_two_words = word_count(MainDictionary.two_words);
 									repair_broken_words(MainDictionary);
 								}
 							}
@@ -107,9 +104,7 @@ function createDictionaryTxt(files) {
 						text: clean_text(texts[i].normalize('NFKC'))
 					}));
 					word_ext(dictionaries[i].text.toLowerCase(), dictionaries[i].words);
-					dictionaries[i].total_words = word_count(dictionaries[i].words);
 					dictionaries[i].two_words = two_word_ext(dictionaries[i].text.toLowerCase());
-					dictionaries[i].total_two_words = word_count(dictionaries[i].two_words);
 					repair_broken_words(dictionaries[i]);
 				}
 				MainDictionary = dictionary_union(MainDictionary, dictionaries);
@@ -132,9 +127,7 @@ function compareWithDictionary(file) {
 		pdf(pdfjsLib, bin, function(text) {
 			tmp_dict.text = clean_text(text.normalize('NFKC'));
 			word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
-			tmp_dict.total_words = word_count(tmp_dict.words);
 			tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
-			tmp_dict.total_two_words = word_count(tmp_dict.two_words);
 			repair_broken_words(tmp_dict);
 			dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 			let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
@@ -162,9 +155,7 @@ function compareTxtWithDictionary(file) {
 		var bin = e.target.result;
 		tmp_dict.text = clean_text(bin.normalize('NFKC'));
 		word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
-		tmp_dict.total_words = word_count(tmp_dict.words);
 		tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
-		tmp_dict.total_two_words = word_count(tmp_dict.two_words);
 		repair_broken_words(tmp_dict);
 		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 		let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
