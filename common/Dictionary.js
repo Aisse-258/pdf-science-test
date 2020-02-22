@@ -21,5 +21,31 @@ var Dictionary = function(o) {
             this.total_n_words += this.n_words[i];
         }
     }
+    this.clean_f = function () {
+        f_reg = /^[npmlobtyjksedqwrufghzxcv]$/;
+        for (let i in this.words) {
+            if (f_reg.test(i)) {
+                this.total_words -= this.words[i];
+                this.words[i] = undefined;
+            }
+        }
+        for (let i in this.two_words) {
+            let a = i.split(' ')[0], b = i.split(' ')[1];
+            if (f_reg.test(a) || f_reg.test(b)) {
+                this.total_two_words -= this.two_words[i];
+                this.two_words[i] = undefined;
+            }
+        }
+        for (let i in this.n_words) {
+            let a = i.split(' ');
+            for (let j = 0; j < a.length; j++) {
+                a[j] = a[j].split(',')[0];
+                if (f_reg.test(a[j])) {
+                    this.total_n_words -= this.n_words[i];
+                    this.n_words[i] = undefined;
+                }
+            }
+        }
+    }
 }
 module.exports = Dictionary;

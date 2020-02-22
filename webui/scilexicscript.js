@@ -70,6 +70,7 @@ function createDictionary (files) {
 									word_ext(MainDictionary.text.toLowerCase(), MainDictionary.words);
 									MainDictionary.two_words = two_word_ext(MainDictionary.text.toLowerCase());
 									repair_broken_words(MainDictionary);
+									MainDictionary.clean_f();
 								}
 							}
 							fileSaveDelayed();
@@ -106,6 +107,7 @@ function createDictionaryTxt(files) {
 					word_ext(dictionaries[i].text.toLowerCase(), dictionaries[i].words);
 					dictionaries[i].two_words = two_word_ext(dictionaries[i].text.toLowerCase());
 					repair_broken_words(dictionaries[i]);
+					dictionaries[i].clean_f();
 				}
 				MainDictionary = dictionary_union(MainDictionary, dictionaries);
 				fileSaveDelayed();
@@ -129,6 +131,7 @@ function compareWithDictionary(file) {
 			word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
 			tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
 			repair_broken_words(tmp_dict);
+			tmp_dict.clean_f();
 			dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 			let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
 			let compatible = is_two_compatible(tmp_dict, MainDictionary);
@@ -157,6 +160,7 @@ function compareTxtWithDictionary(file) {
 		word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
 		tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
 		repair_broken_words(tmp_dict);
+		tmp_dict.clean_f();
 		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 		let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
 		let compatible = is_two_compatible(tmp_dict, MainDictionary);
