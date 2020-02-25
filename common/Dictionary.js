@@ -26,14 +26,14 @@ var Dictionary = function(o) {
         for (let i in this.words) {
             if (f_reg.test(i)) {
                 this.total_words -= this.words[i];
-                this.words[i] = undefined;
+                delete this.words[i];
             }
         }
         for (let i in this.two_words) {
             let a = i.split(' ')[0], b = i.split(' ')[1];
             if (f_reg.test(a) || f_reg.test(b)) {
                 this.total_two_words -= this.two_words[i];
-                this.two_words[i] = undefined;
+                delete this.two_words[i];
             }
         }
         for (let i in this.n_words) {
@@ -42,7 +42,7 @@ var Dictionary = function(o) {
                 a[j] = a[j].split(',')[0];
                 if (f_reg.test(a[j])) {
                     this.total_n_words -= this.n_words[i];
-                    this.n_words[i] = undefined;
+                    delete this.n_words[i];
                 }
             }
         }

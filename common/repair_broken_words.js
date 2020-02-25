@@ -3,7 +3,7 @@ var repair_broken_words = function (dictionary) {
         var maybeUnited = twoWords.split(' ')[0] + twoWords.split(' ')[1];
         if (maybeUnited in dictionary.words && dictionary.two_words[twoWords] == 1) {
             dictionary.words[maybeUnited]++;
-            dictionary.two_words[twoWords] = undefined;
+            delete dictionary.two_words[twoWords];
         }
     }
     dictionary.word_count();
