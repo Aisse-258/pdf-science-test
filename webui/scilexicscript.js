@@ -200,6 +200,7 @@ function fileLoad() {
 			FilesTXT.push(Files[i]);
 		}
 	}
+	document.getElementById('span-save').innerHTML = 'Обработка...';
 	if (FilesPdf[0]){
 		createDictionary(FilesPdf);
 	}
@@ -213,6 +214,7 @@ function fileLoad() {
 
 function fileLoadCompare() {
 	let file = document.getElementById('file-load-compare').files[0];
+	document.getElementById('compare-result').innerHTML = 'Обработка...';
 	if (file.name.slice(-4) == '.pdf') {
 		compareWithDictionary(file);
 	}
