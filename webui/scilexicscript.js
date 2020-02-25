@@ -12,7 +12,6 @@ var is_in_right_order = require('../common/is_in_right_order.js');
 var is_two_compatible = require('../common/is_two_compatible.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
 var extra_words = require('../common/extra_words.js');
-var repair_broken_words = require('../common/repair_broken_words.js');
 var $ = require('jquery-with-bootstrap-for-browserify');
 var MainDictionary = new Dictionary({});
 var dict_info, not_in_right_order = [], not_compatible = [];
@@ -69,7 +68,7 @@ function createDictionary (files) {
 								if (j == texts.length - 1){
 									word_ext(MainDictionary.text.toLowerCase(), MainDictionary.words);
 									MainDictionary.two_words = two_word_ext(MainDictionary.text.toLowerCase());
-									repair_broken_words(MainDictionary);
+									MainDictionary.repair_broken_words();
 									MainDictionary.clean_f();
 								}
 							}
@@ -106,7 +105,7 @@ function createDictionaryTxt(files) {
 					}));
 					word_ext(dictionaries[i].text.toLowerCase(), dictionaries[i].words);
 					dictionaries[i].two_words = two_word_ext(dictionaries[i].text.toLowerCase());
-					repair_broken_words(dictionaries[i]);
+					dictionaries[i].repair_broken_words();
 					dictionaries[i].clean_f();
 				}
 				MainDictionary = dictionary_union(MainDictionary, dictionaries);
@@ -130,7 +129,7 @@ function compareWithDictionary(file) {
 			tmp_dict.text = clean_text(text.normalize('NFKC'));
 			word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
 			tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
-			repair_broken_words(tmp_dict);
+			tmp_dict.repair_broken_words();
 			tmp_dict.clean_f();
 			dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 			let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
@@ -159,7 +158,7 @@ function compareTxtWithDictionary(file) {
 		tmp_dict.text = clean_text(bin.normalize('NFKC'));
 		word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
 		tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
-		repair_broken_words(tmp_dict);
+		tmp_dict.repair_broken_words();
 		tmp_dict.clean_f();
 		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 		let rightOrder = is_in_right_order(tmp_dict, MainDictionary);

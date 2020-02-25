@@ -47,5 +47,15 @@ var Dictionary = function(o) {
             }
         }
     }
+    this.repair_broken_words = function () {
+        for (let twoWords in this.two_words) {
+            var maybeUnited = twoWords.split(' ')[0] + twoWords.split(' ')[1];
+            if (maybeUnited in this.words && this.two_words[twoWords] == 1) {
+                this.words[maybeUnited]++;
+                delete this.two_words[twoWords];
+            }
+        }
+        this.word_count();
+    }
 }
 module.exports = Dictionary;
