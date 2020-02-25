@@ -2,6 +2,9 @@ var reg_word = '[^\\s“”—–⁄′‘’`\\u0001-\\u002c \\u005b-\\u0060 \
 var n_word_ext = function(data, word_count){
     let matches = {}, found;
     let reg_n_word = reg_word;
+    if (word_count > 1) {
+        reg_n_word += ',?'
+    }
     for (let i = 1; i < word_count; i++) {
         reg_n_word += '\\s' + reg_word;
     }
