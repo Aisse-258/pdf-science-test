@@ -4,6 +4,8 @@
   "description": "Analyze your article to detect lexical problems",
   "main": "./common/Dictionary.js",
   "dependencies": {
+    "browserify-common-prelude": "^0.5.4",
+    "pdf-to-text": "0.0.7",
     "pdfjs-dist": "^1.10.100"
   },
   "devDependencies": {
