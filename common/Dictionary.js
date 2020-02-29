@@ -49,9 +49,10 @@ var Dictionary = function(o) {
     }
     this.repair_broken_words = function () {
         for (let twoWords in this.two_words) {
-            var maybeUnited = twoWords.split(' ')[0] + twoWords.split(' ')[1];
-            if (maybeUnited in this.words && this.two_words[twoWords] == 1) {
-                this.words[maybeUnited]++;
+            var maybeUnited = twoWords.split(' ');
+            if (maybeUnited[0] + maybeUnited[1] in this.words && this.two_words[twoWords] == 1) {
+                console.log(twoWords);
+                this.words[maybeUnited[0] + maybeUnited[1]]++;
                 delete this.two_words[twoWords];
             }
         }
