@@ -123,6 +123,8 @@ function createDictionaryTxt(files) {
 function compareWithDictionary(file) {
 	rare_count = 1 * $('#rare-less-than').val();
 	tmp_dict = new Dictionary({});
+	not_in_right_order = [];
+	not_compatible = [];
 	if (rare_count <= 0) {
 		rare_count = 2;
 	}
@@ -149,6 +151,8 @@ function compareWithDictionary(file) {
 function compareTxtWithDictionary(file) {
 	rare_count = 1 * $('#rare-less-than').val();
 	tmp_dict = new Dictionary({});
+	not_in_right_order = [];
+	not_compatible = [];
 	if (rare_count <= 0) {
 		rare_count = 2;
 	}
