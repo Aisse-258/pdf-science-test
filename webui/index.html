@@ -8,6 +8,7 @@
 <body style="height:100%; margin:10px;">
 	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="sci-ui.min.css">
 	Загрузите файлы для словаря в формате pdf, txt или json:
 	<br>
 	<label class="btn btn-default btn-file">
@@ -20,8 +21,12 @@
 		Количество будет влиять на то, отобразится ли слово в списке редко<br>
 		встречающихся в корпусе.<br>
 	</p>
-	<input type="text" style="width:100px;" id="add-to-dictionary">
-	<input type="number" style="width:100px;" id="add-to-dictionary-count">
+	<input type="text" style="width:100px;" id="add-to-dictionary" class="form-control">
+	<div class="def-number-input number-input safari_only">
+		<button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+		<input class="quantity" min="1" name="quantity" value="3" type="number" id="add-to-dictionary-count">
+		<button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+	</div>
 	<label class="btn btn-default btn-file">
 		Добавить в словарь
 		<input type="button" id="add-to-dictionary-btn" style="display:none;">
@@ -39,8 +44,11 @@
 		которые встретились в корпусе 1 или 2 раза.<br>
 		Эту цифру можно регулировать с помощью следующего поля.<br>
 	</p>
-	<input type="number" style="width:100px;" id="rare-less-than">
-	<br>
+	<div class="def-number-input number-input safari_only">
+		<button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+		<input class="quantity" min="1" name="quantity" value="2" type="number" id="rare-less-than">
+		<button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+	</div>
 	<p>
 		Нажмите следующую кнопку, чтобы получить новый результат по уже загруженному<br>
 		для анализа файлу после изменения словаря или частотности редко встречающихся слов.<br>

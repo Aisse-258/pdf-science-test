@@ -74,7 +74,7 @@ module.exports = function(grunt) {
 				dest: 'dist/webui/scilexicscript.js'
 			},
 		},
-/*
+
 		cssmin: {
 			options: {
 				shorthandCompacting: false,
@@ -83,25 +83,8 @@ module.exports = function(grunt) {
 			target: {
 				files: [
 					{
-						'dist/css/chas-ui.min.css': [
-							 'css/browser.css',
-							 'css/main.css',
-							 'css/menu.css',
-							 'ext/anyslider/css/anythingslider.css',
-							 'ext/anyslider/css/theme-minimalist-square.css',
-							 'ext/fonts/stylesheet.css',
-							 'ext/keyboard/keyboard.css',
-							 'ext/jqplot/jquery.jqplot.css',
-						],
-						'dist/css/chas-ui-bs.min.css': [
-							 'css/browser.css',
-							 'css/menu.css',
-							 'ext/anyslider/css/anythingslider.css',
-							 'ext/anyslider/css/theme-minimalist-square.css',
-							 'ext/fonts/stylesheet.css',
-							 'ext/keyboard/keyboard.css',
-							 'ext/jqplot/jquery.jqplot.css',
-							 'ext/bootstrap/css/bootstrap.min.css',
+						'dist/webui/sci-ui.min.css': [
+							 'webui/number_input_style.css',
 						],
 					},
 					{
@@ -114,7 +97,7 @@ module.exports = function(grunt) {
 				]
 			},
 		},
-*/
+
 		htmlmin: {
 			options: {
 				removeComments: true,
@@ -231,6 +214,10 @@ module.exports = function(grunt) {
 		'newer:htmlmin',
 	]);
 
+	grunt.registerTask('process-css', [
+		'newer:cssmin',
+	]);
+
 	grunt.registerTask('process-webui-js', [
 		'newer:eslint',
 		'browserify:main',
@@ -247,5 +234,6 @@ module.exports = function(grunt) {
 		'node-qunit',
 		'process-html',
 		'process-webui-js',
+		'process-css',
 	]);
 };
