@@ -178,6 +178,8 @@ function compareReload () {
 	if (document.getElementById("repair-broken-words").checked) {
 		MainDictionary.repair_broken_words();
 		tmp_dict.repair_broken_words();
+		not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
+		not_compatible = Object.keys(is_two_compatible(tmp_dict, MainDictionary));
 	}
 	dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 	viewDictInfo();
