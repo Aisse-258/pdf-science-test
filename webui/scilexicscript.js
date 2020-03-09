@@ -278,22 +278,26 @@ function fileSave() {
 function view() {
 	var str = '';
 	if (Object.keys(dict_info.ExtraWords).length != 0) {
-		str = '<h3>Не найдено в словаре:</h3><br>';
+		str = '<h3>Не найдено в словаре:</h3><br><h4> Всего ' +
+		Object.keys(dict_info.ExtraWords).length + '</h4><br>';
 		for (let i in dict_info.ExtraWords) {
 			str += i + '<br>';
 		}
 	}
 	if (Object.keys(dict_info.RareWords).length != 0) {
-		str = str + '<h3>Встречается менее ' + rare_count + ' раз:</h3><br>';
+		str = str + '<h3>Встречается менее ' + rare_count + ' раз:</h3><br><h4> Всего ' +
+		Object.keys(dict_info.RareWords).length + '</h4><br>';
 		for (let i in dict_info.RareWords) {
 			str += i + '<br>';
 		}
 	}
 	if (not_in_right_order.length != 0) {
-		str += '<h3>Возможно стоят в неправильном порядке:</h3><br>' + not_in_right_order.join('<br>') + '<br>';
+		str += '<h3>Возможно стоят в неправильном порядке:</h3><br><h4> Всего ' +
+		not_in_right_order.length + '</h4><br>' + not_in_right_order.join('<br>') + '<br>';
 	}
 	if (not_compatible.length != 0) {
-		str += '<h3>Возможно несочетаемы:</h3><br>' + not_compatible.join('<br>');
+		str += '<h3>Возможно несочетаемы:</h3><br><h4> Всего ' +
+		not_compatible.length + '</h4><br>' + not_in_right_order.join('<br>') + '<br>' + not_compatible.join('<br>');
 	}
 	document.getElementById('compare-result').innerHTML = str;
 }
