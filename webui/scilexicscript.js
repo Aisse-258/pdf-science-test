@@ -138,14 +138,8 @@ function compareWithDictionary(file) {
 			}
 			tmp_dict.clean_f();
 			dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
-			let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
-			let compatible = is_two_compatible(tmp_dict, MainDictionary);
-			for (let i in rightOrder) {
-				not_in_right_order.push(i);
-			}
-			for (let i in compatible) {
-				not_compatible.push(i);
-			}
+			not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
+			not_compatible = Object.keys(is_two_compatible(tmp_dict, MainDictionary));
 			viewDictInfo();
 		});
 	}
@@ -169,14 +163,8 @@ function compareTxtWithDictionary(file) {
 		}
 		tmp_dict.clean_f();
 		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
-		let rightOrder = is_in_right_order(tmp_dict, MainDictionary);
-		let compatible = is_two_compatible(tmp_dict, MainDictionary);
-		for (let i in rightOrder) {
-			not_in_right_order.push(i);
-		}
-		for (let i in compatible) {
-			not_compatible.push(i);
-		}
+		not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
+		not_compatible = Object.keys(is_two_compatible(tmp_dict, MainDictionary));
 		viewDictInfo();
 	}
 	reader.readAsText(file);
