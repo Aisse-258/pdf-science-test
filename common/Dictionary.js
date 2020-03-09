@@ -51,7 +51,6 @@ var Dictionary = function(o) {
         for (let twoWords in this.two_words) {
             var maybeUnited = twoWords.split(' ');
             if (maybeUnited[0] + maybeUnited[1] in this.words && this.two_words[twoWords] == 1) {
-                console.log(twoWords);
                 this.words[maybeUnited[0] + maybeUnited[1]]++;
                 delete this.two_words[twoWords];
             }
