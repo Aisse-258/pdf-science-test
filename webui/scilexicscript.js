@@ -19,7 +19,7 @@ var tmp_dict = new Dictionary({});
 var rare_count = 2;
 function addDictionary(files) {
 	let dictionaries = [];
-	var reader = new FileReader();  
+	var reader = new FileReader();
 	function readFile(index) {
 		if( index >= files.length ) {
 			return;
@@ -87,7 +87,7 @@ function createDictionary (files) {
 function createDictionaryTxt(files) {
 	let texts = [];
 	let dictionaries = [];
-	var reader = new FileReader();  
+	var reader = new FileReader();
 	function readFile(index) {
 		if( index >= files.length ) {
 			return;
