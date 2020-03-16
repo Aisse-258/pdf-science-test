@@ -75,6 +75,9 @@ function createDictionary (files) {
 										MainDictionary.word_count();
 									}
 									MainDictionary.clean_f();
+									if(document.getElementById("clean-greek").checked) {
+										MainDictionary.clean_greek();
+									}
 								}
 							}
 							fileSaveDelayed();
@@ -117,6 +120,9 @@ function createDictionaryTxt(files) {
 						dictionaries[i].word_count();
 					}
 					dictionaries[i].clean_f();
+					if(document.getElementById("clean-greek").checked) {
+						dictionaries[i].clean_greek();
+					}
 				}
 				MainDictionary = dictionary_union(MainDictionary, dictionaries);
 				fileSaveDelayed();
@@ -148,6 +154,9 @@ function compareWithDictionary(file) {
 				tmp_dict.word_count();
 			}
 			tmp_dict.clean_f();
+			if(document.getElementById("clean-greek").checked) {
+				tmp_dict.clean_greek();
+			}
 			dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 			not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
 			not_compatible = Object.keys(is_two_compatible(tmp_dict, MainDictionary));
@@ -178,6 +187,9 @@ function compareTxtWithDictionary(file) {
 			tmp_dict.word_count();
 		}
 		tmp_dict.clean_f();
+		if(document.getElementById("clean-greek").checked) {
+			tmp_dict.clean_greek();
+		}
 		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 		not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
 		not_compatible = Object.keys(is_two_compatible(tmp_dict, MainDictionary));
@@ -196,6 +208,10 @@ function compareReload () {
 		tmp_dict.repair_broken_words();
 		not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
 		not_compatible = Object.keys(is_two_compatible(tmp_dict, MainDictionary));
+	}
+	if(document.getElementById("clean-greek").checked) {
+		MainDictionary.clean_greek();
+		tmp_dict.clean_greek();
 	}
 	MainDictionary.word_count();
 	tmp_dict.word_count();
