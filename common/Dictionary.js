@@ -57,5 +57,26 @@ var Dictionary = function(o) {
         }
         this.word_count();
     }
+    this.clean_greek = function () {
+        var greek_reg = /[\u0370-\u03ff]/;
+        for (let i in this.words) {
+            if (greek_reg.test(i)) {
+                this.total_words -= this.words[i];
+                delete this.words[i];
+            }
+        }
+        for (let i in this.two_words) {
+            if (greek_reg.test(i)) {
+                this.total_two_words -= this.two_words[i];
+                delete this.two_words[i];
+            }
+        }
+        for (let i in this.n_words) {
+            if (greek_reg.test(i)) {
+                this.total_n_words -= this.n_words[i];
+                delete this.n_words[i];
+            }
+        }
+    }
 }
 module.exports = Dictionary;
