@@ -32,6 +32,7 @@ if (process.argv[2].slice(-4)=='.pdf') {
         word_ext(current_dict.text.toLowerCase(), current_dict.words);
         current_dict.two_words = two_word_ext(current_dict.text.toLowerCase());
         current_dict.clean_f();
+        current_dict.clean_greek();
         current_dict.repair_broken_words();
         let repeat_count = process.argv[3];
         let extraWords = extra_words(current_dict.words, example_dicts.words, repeat_count);
@@ -59,6 +60,7 @@ else {
     word_ext(current_dict.text.toLowerCase(), current_dict.words);
     current_dict.two_words = two_word_ext(current_dict.text.toLowerCase());
     current_dict.clean_f();
+    current_dict.clean_greek();
     current_dict.repair_broken_words();
     let repeat_count = process.argv[3];
     let extraWords = extra_words(current_dict.words, example_dicts.words, repeat_count);
