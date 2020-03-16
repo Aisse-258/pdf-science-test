@@ -71,6 +71,9 @@ function createDictionary (files) {
 									if(document.getElementById("repair-broken-words").checked) {
 										MainDictionary.repair_broken_words();
 									}
+									else {
+										MainDictionary.word_count();
+									}
 									MainDictionary.clean_f();
 								}
 							}
@@ -110,6 +113,9 @@ function createDictionaryTxt(files) {
 					if(document.getElementById("repair-broken-words").checked) {
 						dictionaries[i].repair_broken_words();
 					}
+					else {
+						dictionaries[i].word_count();
+					}
 					dictionaries[i].clean_f();
 				}
 				MainDictionary = dictionary_union(MainDictionary, dictionaries);
@@ -138,6 +144,9 @@ function compareWithDictionary(file) {
 			if(document.getElementById("repair-broken-words").checked) {
 				tmp_dict.repair_broken_words();
 			}
+			else {
+				tmp_dict.word_count();
+			}
 			tmp_dict.clean_f();
 			dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 			not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
@@ -165,6 +174,9 @@ function compareTxtWithDictionary(file) {
 		if(document.getElementById("repair-broken-words").checked) {
 			tmp_dict.repair_broken_words();
 		}
+		else {
+			tmp_dict.word_count();
+		}
 		tmp_dict.clean_f();
 		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 		not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
@@ -185,6 +197,8 @@ function compareReload () {
 		not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
 		not_compatible = Object.keys(is_two_compatible(tmp_dict, MainDictionary));
 	}
+	MainDictionary.word_count();
+	tmp_dict.word_count();
 	dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
 	viewDictInfo();
 }
