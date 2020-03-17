@@ -31,6 +31,7 @@ if (process.argv[2].slice(-4)=='.pdf') {
         });
         word_ext(current_dict.text.toLowerCase(), current_dict.words);
         current_dict.two_words = two_word_ext(current_dict.text.toLowerCase());
+        current_dict.word_count();
         current_dict.clean_f();
         current_dict.clean_greek();
         current_dict.repair_broken_words();
@@ -59,6 +60,7 @@ else {
     });
     word_ext(current_dict.text.toLowerCase(), current_dict.words);
     current_dict.two_words = two_word_ext(current_dict.text.toLowerCase());
+    current_dict.word_count();
     current_dict.clean_f();
     current_dict.clean_greek();
     current_dict.repair_broken_words();

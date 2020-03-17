@@ -49,13 +49,14 @@ var Dictionary = function(o) {
     }
     this.repair_broken_words = function () {
         for (let twoWords in this.two_words) {
-            var maybeUnited = twoWords.split(' ');
-            if (maybeUnited[0] + maybeUnited[1] in this.words && this.two_words[twoWords] == 1) {
-                this.words[maybeUnited[0] + maybeUnited[1]]++;
+            var maybeUnited = twoWords.split(' ').join('');
+            if (maybeUnited in this.words && this.two_words[twoWords] == 1) {
+                this.words[maybeUnited]++;
+                this.total_words++;
+                this.total_two_words -= this.two_words[twoWords]
                 delete this.two_words[twoWords];
             }
         }
-        this.word_count();
     }
     this.clean_greek = function () {
         var greek_reg = /[\u0370-\u03ff]/;

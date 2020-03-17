@@ -68,11 +68,9 @@ function createDictionary (files) {
 								if (j == texts.length - 1){
 									word_ext(MainDictionary.text.toLowerCase(), MainDictionary.words);
 									MainDictionary.two_words = two_word_ext(MainDictionary.text.toLowerCase());
+									MainDictionary.word_count();
 									if(document.getElementById("repair-broken-words").checked) {
 										MainDictionary.repair_broken_words();
-									}
-									else {
-										MainDictionary.word_count();
 									}
 									MainDictionary.clean_f();
 									if(document.getElementById("clean-greek").checked) {
@@ -113,11 +111,9 @@ function createDictionaryTxt(files) {
 					}));
 					word_ext(dictionaries[i].text.toLowerCase(), dictionaries[i].words);
 					dictionaries[i].two_words = two_word_ext(dictionaries[i].text.toLowerCase());
+					dictionaries[i].word_count();
 					if(document.getElementById("repair-broken-words").checked) {
 						dictionaries[i].repair_broken_words();
-					}
-					else {
-						dictionaries[i].word_count();
 					}
 					dictionaries[i].clean_f();
 					if(document.getElementById("clean-greek").checked) {
@@ -147,11 +143,9 @@ function compareWithDictionary(file) {
 			tmp_dict.text = clean_text(text.normalize('NFKC'));
 			word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
 			tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
+			tmp_dict.word_count();
 			if(document.getElementById("repair-broken-words").checked) {
 				tmp_dict.repair_broken_words();
-			}
-			else {
-				tmp_dict.word_count();
 			}
 			tmp_dict.clean_f();
 			if(document.getElementById("clean-greek").checked) {
@@ -180,11 +174,9 @@ function compareTxtWithDictionary(file) {
 		tmp_dict.text = clean_text(bin.normalize('NFKC'));
 		word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
 		tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
+		tmp_dict.word_count();
 		if(document.getElementById("repair-broken-words").checked) {
 			tmp_dict.repair_broken_words();
-		}
-		else {
-			tmp_dict.word_count();
 		}
 		tmp_dict.clean_f();
 		if(document.getElementById("clean-greek").checked) {

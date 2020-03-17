@@ -28,6 +28,7 @@ var dictionary_create = function (files, dictionary_name) {
             dictionary.two_words = two_word_ext(dictionary.text.toLowerCase());
             counter++;
             if (counter == files.length){
+                dictionary.word_count();
                 dictionary.clean_f();
                 dictionary.clean_greek();
                 dictionary.repair_broken_words();
@@ -49,6 +50,7 @@ var dictionary_create = function (files, dictionary_name) {
                 dictionary.two_words = two_word_ext(dictionary.text.toLowerCase());
                 counter++;
                 if (counter == files.length){
+                    dictionary.word_count();
                     dictionary.clean_f();
                     dictionary.clean_greek();
                     dictionary.repair_broken_words();
