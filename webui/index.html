@@ -31,13 +31,13 @@
 		Количество будет влиять на то, отобразится ли слово в списке редко<br>
 		встречающихся в корпусе.<br>
 	</p>
-	<input type="text" style="width:100px;" id="add-to-dictionary" class="form-control">
-	<div class="def-number-input number-input safari_only">
+	<input type="text" style="width:300px; display:inline-block" id="add-to-dictionary" class="form-control">
+	<div class="def-number-input number-input safari_only" style="display:inline-block">
 		<button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
 		<input class="quantity" min="1" name="quantity" value="3" type="number" id="add-to-dictionary-count">
 		<button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
 	</div>
-	<label class="btn btn-default btn-file">
+	<label class="btn btn-default btn-file"  style="display:inline-block">
 		Добавить в словарь
 		<input type="button" id="add-to-dictionary-btn" style="display:none;">
 	</label>
