@@ -85,6 +85,8 @@ module.exports = function(grunt) {
 					{
 						'dist/webui/sci-ui.min.css': [
 							 'webui/number_input_style.css',
+							 'node_modules/bootstrap/dist/css/bootstrap.css',
+							 'node_modules/bootstrap/dist/css/bootstrap-theme.css',
 						],
 					},
 					{
