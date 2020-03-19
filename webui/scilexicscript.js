@@ -17,6 +17,17 @@ var MainDictionary = new Dictionary({});
 var dict_info, not_in_right_order = [], not_compatible = [];
 var tmp_dict = new Dictionary({});
 var rare_count = 2;
+
+$('#repair-broken-words-info').tooltip({
+	html: 'true',
+	placement: 'right'
+});
+
+$('#clean-greek-info').tooltip({
+	html: 'true',
+	placement: 'right'
+});
+
 function addDictionary(files) {
 	let dictionaries = [];
 	var reader = new FileReader();
