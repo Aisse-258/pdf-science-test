@@ -4,75 +4,106 @@
 <head>
 	<meta charset="utf8"/>
 	<title>SciLexic</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body style="height:100%; margin:10px;">
 	<link rel="stylesheet" href="sci-ui.min.css">
-	<h4>
-		<b>Загрузите файлы для словаря в формате pdf, txt или json:</b>
-	</h4>
-	<br>
-	<label class="btn btn-default btn-file">
-		Загрузить файл
-		<input type="file" id="file-load" multiple = "multiple" style="display:none;">
-	</label>
-	<br>
-	<label class="custom-control-input">
-		<input type="checkbox" id="repair-broken-words"> Склейка "битого" текста 
-		<div id="repair-broken-words-info" class="info" title="Компенсация дефектов извлечения текста<br>int egral → integral<br><b>WARNING!</b> Рекомендуется изучить оба варианта отчёта програмы.">ⓘ</div>
-	</label>
-	<br>
-	<label class="custom-control-input">
-	<input type="checkbox" id="clean-greek" checked> Игнорировать символы греческого алфавита 
-	<div id="clean-greek-info" class="info" title="Если текст не на греческом - не трогать :)">ⓘ</div>
-	</label>
-	<br>
-	<p>
-		Можно также добавить в словарь отдельные слова в заданном количестве.<br>
-		Количество будет влиять на то, отобразится ли слово в списке редко<br>
-		встречающихся в корпусе.<br>
-	</p>
-	<input type="text" style="width:300px; display:inline-block" id="add-to-dictionary" class="form-control">
-	<div class="def-number-input number-input safari_only" style="display:inline-block">
-		<button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-		<input class="quantity" min="1" name="quantity" value="3" type="number" id="add-to-dictionary-count">
-		<button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-	</div>
-	<label class="btn btn-default btn-file"  style="display:inline-block">
-		Добавить в словарь
-		<input type="button" id="add-to-dictionary-btn" style="display:none;">
-	</label>
-	<hr/>
-	<h4>
-		<b>Анализ текста по словарю:</b>
-	</h4>
-	<br>
-	<label class="btn btn-default btn-file">
-		Загрузить файл
-		<input type="file" id="file-load-compare" style="display:none;">
-	</label>
-	<br>
-	<p>
-		Список редко встречающихся в корпусе слов по умолчанию содержит слова из текста,<br>
-		которые встретились в корпусе 1 или 2 раза.<br>
-		Эту цифру можно регулировать с помощью следующего поля.<br>
-	</p>
-	<div class="def-number-input number-input safari_only">
-		<button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
-		<input class="quantity" min="1" name="quantity" value="2" type="number" id="rare-less-than">
-		<button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
-	</div>
-	<p>
-		Нажмите следующую кнопку, чтобы получить новый результат по уже загруженному<br>
-		для анализа файлу после изменения словаря или частотности редко встречающихся слов.<br>
-	</p>
-	<label class="btn btn-default btn-file" style="width: 130px;">
-		Обновить
-		<input type="button" id="compare-reload" style="display:none;">
-	</label>
-	<script src="scilexicscript.js"></script>
-	<hr/>
-	<span id="span-save"></span>
-	<div id='compare-result'></div>
 
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-xs-12 col-sm-11 col-md-9 col-lg-6">
+				<h4>
+					<b>Загрузите файлы для словаря в формате pdf, txt или json:</b>
+				</h4>
+				<br>
+				<label class="btn btn-default btn-file">
+					Загрузить файл
+					<input type="file" id="file-load" multiple = "multiple" style="display:none;">
+				</label>
+				<br>
+				<label class="custom-control-input">
+					<input type="checkbox" id="repair-broken-words"> Склейка "битого" текста 
+					<div id="repair-broken-words-info" class="info" title="Компенсация дефектов извлечения текста<br>int egral → integral<br><b>WARNING!</b> Рекомендуется изучить оба варианта отчёта програмы.">ⓘ</div>
+				</label>
+				<br>
+				<label class="custom-control-input">
+				<input type="checkbox" id="clean-greek" checked> Игнорировать символы греческого алфавита 
+				<div id="clean-greek-info" class="info" title="Если текст не на греческом - не трогать :)">ⓘ</div>
+				</label>
+			</div>
+			<div class="clearfix visible-sm-block visible-md-block visible-lg-block"></div>
+			<div class="col-xs-12 col-sm-11 col-md-9 col-lg-6">
+				<p>
+					Можно также добавить в словарь отдельные слова в заданном количестве. 
+					Количество будет влиять на то, отобразится ли слово в списке редко 
+					встречающихся в корпусе.<br>
+				</p>
+			</div>
+			<div class="clearfix visible-sm-block visible-md-block visible-lg-block"></div>
+		 	<div class="col-xs-12 col-sm-5 col-md-4 col-lg-2" style="margin-top:4.5px;">
+				<input type="text" style="max-width:300px;" id="add-to-dictionary" class="form-control">
+			</div>
+		  	<div class="col-xs-4 col-sm-2 col-md-2 col-lg-1">
+				<div class="def-number-input number-input safari_only">
+					<button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+					<input class="quantity" min="1" name="quantity" value="3" type="number" id="add-to-dictionary-count">
+					<button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+				</div>
+			</div>
+			<div class="clearfix visible-xs-block"></div>
+		  	<div class="col-xs-8 col-sm-4 col-md-3 col-lg-3" style="margin-top:4.5px;">
+				<label class="btn btn-default btn-file"  style="display:inline-block">
+					Добавить в словарь
+					<input type="button" id="add-to-dictionary-btn" style="display:none;">
+				</label>
+			</div>
+			<div class="col-xs-12">
+				<hr/>
+			</div>
+			<div class="clearfix visible-sm-block visible-md-block visible-lg-block"></div>
+		  	<div class="col-xs-12 col-sm-11 col-md-9 col-lg-6">
+				<h4>
+					<b>Анализ текста по словарю:</b>
+				</h4>
+				<br>
+				<label class="btn btn-default btn-file">
+					Загрузить файл
+					<input type="file" id="file-load-compare" style="display:none;">
+				</label>
+			</div>
+			<div class="clearfix visible-sm-block visible-md-block visible-lg-block"></div>
+			<div class="col-xs-12 col-sm-11 col-md-9 col-lg-6">
+				<p>
+					Список редко встречающихся в корпусе слов по умолчанию содержит слова из текста, 
+					которые встретились в корпусе 1 или 2 раза. 
+					Эту цифру можно регулировать с помощью следующего поля.<br>
+				</p>
+				<div class="def-number-input number-input safari_only">
+					<button onclick="this.parentNode.querySelector('input[type=number]').stepDown()" class="minus"></button>
+					<input class="quantity" min="1" name="quantity" value="2" type="number" id="rare-less-than">
+					<button onclick="this.parentNode.querySelector('input[type=number]').stepUp()" class="plus"></button>
+				</div>
+			</div>
+			<div class="clearfix visible-sm-block visible-md-block visible-lg-block"></div>
+			<div class="col-xs-12 col-sm-11 col-md-9 col-lg-6">
+				<p>
+					Нажмите следующую кнопку, чтобы получить новый результат по уже загруженному 
+					для анализа файлу после изменения словаря или частотности редко встречающихся слов.<br>
+				</p>
+				<label class="btn btn-default btn-file" style="width: 130px;">
+					Обновить
+					<input type="button" id="compare-reload" style="display:none;">
+				</label>
+			</div>
+			<div class="clearfix visible-sm-block visible-md-block visible-lg-block"></div>
+			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-6">
+				<hr/>
+				<span id="span-save"></span>
+				<div id='compare-result'></div>
+			</div>
+		</div>
+	</div>
+
+	<script src="scilexicscript.js"></script>
 </body>
 </html>
