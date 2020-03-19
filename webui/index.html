@@ -16,12 +16,14 @@
 		<input type="file" id="file-load" multiple = "multiple" style="display:none;">
 	</label>
 	<br>
-	<label class="custom-control-input" data-toggle="tooltip" data-placement="bottom" title="WARNING! Рекомендуется изучить оба варианта отчёта програмы.">
-	<input type="checkbox" id="repair-broken-words"> Склейка "битого" текста
+	<label class="custom-control-input">
+		<input type="checkbox" id="repair-broken-words"> Склейка "битого" текста 
+		<div id="repair-broken-words-info" class="info" title="Компенсация дефектов извлечения текста<br>int egral → integral<br><b>WARNING!</b> Рекомендуется изучить оба варианта отчёта програмы.">ⓘ</div>
 	</label>
 	<br>
-	<label class="custom-control-input" data-toggle="tooltip" data-placement="bottom" title="Если текст не на греческом - не трогать.">
-	<input type="checkbox" id="clean-greek" checked> Игнорировать символы греческого алфавита
+	<label class="custom-control-input">
+	<input type="checkbox" id="clean-greek" checked> Игнорировать символы греческого алфавита 
+	<div id="clean-greek-info" class="info" title="Если текст не на греческом - не трогать :)">ⓘ</div>
 	</label>
 	<br>
 	<p>
