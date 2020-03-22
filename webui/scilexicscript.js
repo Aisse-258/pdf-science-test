@@ -322,7 +322,7 @@ function view() {
 		}
 	}
 	if (Object.keys(dict_info.RareWords).length != 0) {
-		str = str + '<h3>Встречается менее ' + rare_count + ' раз:</h3><br><h4> Всего ' +
+		str = str + '<h3>Встречается не более ' + rare_count + ' раз:</h3><br><h4> Всего ' +
 		Object.keys(dict_info.RareWords).length + '</h4><br>';
 		for (let i in dict_info.RareWords) {
 			str += i + '<br>';
