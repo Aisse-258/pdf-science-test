@@ -1,11 +1,11 @@
-var n_word_ext = require('./common/n_word_ext.js');
+var n_word_ext = require('../common/n_word_ext.js');
 var fs = require('fs');
 var pdfUtil = require('pdf-to-text');
-var pdf = require('./common/read_pdf.js');
-var clean_text = require('./common/clean_text.js').clean_with_replace;
-let words = { '2':{}, '3':{}, '4':{}, '5':{}, '6':{}, '7':{}, '8':{}, '9':{}, '10':{} };
+var pdf = require('../common/read_pdf.js');
+var clean_text = require('../common/clean_text.js').clean_with_replace;
+let words = {'1':{},'2':{}, '3':{}, '4':{}, '5':{}, '6':{}, '7':{}, '8':{}, '9':{}, '10':{} };
 var reg_lett = /^[npmlobtyjksedqwrufghzxcvмтрнжейцкгшщзхъфыплдэчьбю]$/,
-    reg_f = /[θεγλψδβρω×ξη�φμτασúœ◊ëáêąˇ›ěÿżḡq̇◦ôˆăâò〉✚✙✣✢✤✜✛✘èîíãóæï]/;
+    reg_f = /[θεγλψδβρω×ξη�φμτασúœ◊ëáêąˇ›ěÿżḡq̇◦ôˆăâò〉ẍ✚✙✣✢✤✜✛✘èîíãóæï]/;
 var unite_obj = function (ob1, ob2) {
     var ob_un = {};
     for (let i in ob1) {
@@ -110,15 +110,15 @@ var dirs = {
 var counter = 0, file_count = 0;
 for (let ydir in dirs) {
     for (let numdir in dirs[ydir]) {
-        fs.readdir('vestnik/' + ydir + '/' + numdir, function(err, items) {
+        fs.readdir('../vestnik/' + ydir + '/' + numdir, function(err, items) {
             file_count += items.length;
             for (let i = 0; i < items.length; i++) {/*запись текста из всех пдф-файлов в txt
-                pdfUtil.pdfToText('./vestnik/' + ydir + '/' + numdir + '/' + items[i], function (err, text) {
+                pdfUtil.pdfToText('../vestnik/' + ydir + '/' + numdir + '/' + items[i], function (err, text) {
                     if(err){
                         return console.log(err);
                     }
                     text = clean_text(text.normalize('NFKC')).toLowerCase();
-                    fs.writeFile('./vestnik-txt/' + ydir + '/' + numdir + '/' + items[i].slice(0,-4) + '.txt', text, function(err){
+                    fs.writeFile('../vestnik-txt/' + ydir + '/' + numdir + '/' + items[i].slice(0,-4) + '.txt', text, function(err){
                         if(err){
                             return console.log(err);
                         }
