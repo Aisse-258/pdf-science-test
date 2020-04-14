@@ -14,6 +14,14 @@ var n_word_ext = function(data, word_count){
     reg_n_word = new RegExp('('+reg_n_word+')', 'g');
     while (found = reg_n_word.exec(data)) {
         if (!/^-+\s/.test(found[0]) && !/\s-+$/.test(found[0]) && !/\s-+\s/.test(found[0]) && !/^-+$/.test(found[0])) {
+			if (found[0].length > 3) {
+				if(found[0][0] == '-') {
+					found[0] = found[0].slice(1);
+				}
+				if (found[0][found[0].length-1] == '-') {
+					found[0] = found[0].slice(0,-1);
+				}
+			}
             if (found[0] in matches) {
                 matches[found[0]]++;
             }
