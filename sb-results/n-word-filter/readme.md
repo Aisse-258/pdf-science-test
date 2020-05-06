@@ -19,7 +19,7 @@ npm install
 
 4. Запустите файл `pdf_to_text.js` командой
 ```
-pdf_to_text.js
+node pdf_to_text.js
 ```
 
 5. Запустите файл `n_word_parser.js` в цикле командой
