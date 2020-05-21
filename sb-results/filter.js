@@ -52,7 +52,7 @@ for (let ph in phrases[phrase_length]) {
 		let freq_compare = (ph_freq > words_freq);
 		if (freq_compare) {
 			for (let i = 0; i < div_freq.length; i++) {
-				if (div_freq[i]*Math.log(phrases[1].total_words) > ph_freq) {
+				if (div_freq[i]*Math.log(phrases[1].total_words > ph_freq) {
 					freq_compare = false;
 					break;
 				}
