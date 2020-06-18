@@ -1,6 +1,6 @@
 {
   "name": "scilexic",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Analyze your article to detect lexical problems",
   "main": "./common/Dictionary.js",
   "dependencies": {
