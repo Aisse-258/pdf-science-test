@@ -5,8 +5,10 @@
   "main": "./common/Dictionary.js",
   "dependencies": {
     "browserify-common-prelude": "^0.5.4",
+    "codemirror": "^5.21.0",
     "pdf-to-text": "0.0.7",
-    "pdfjs-dist": "^1.10.100"
+    "pdfjs-dist": "^1.10.100",
+    "tex-lint": "0.0.18"
   },
   "devDependencies": {
     "bootstrap": "^3.3.7",
