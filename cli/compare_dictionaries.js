@@ -36,7 +36,7 @@ if (process.argv[2].slice(-4)=='.pdf') {
 		current_dict.clean_f();
 		current_dict.clean_greek();
 		current_dict.repair_broken_words();
-		let repeat_count = process.argv[3];
+		let repeat_count = Number(process.argv[3]);
 		let extraWords = extra_words(current_dict.words, example_dicts.words, repeat_count);
 		let not_rigth_order = is_in_right_order(current_dict, example_dicts);
 		let not_compatible = is_two_compatible(current_dict, example_dicts);
@@ -65,7 +65,7 @@ else if (process.argv[2].slice(-4)=='.tex') {
 	current_dict.clean_f();
 	current_dict.clean_greek();
 	current_dict.repair_broken_words();
-	let repeat_count = process.argv[3];
+	let repeat_count = Number(process.argv[3]);
 	let extraWords = extra_words(current_dict.words, example_dicts.words, repeat_count);
 	let not_rigth_order = is_in_right_order(current_dict, example_dicts);
 	let not_compatible = is_two_compatible(current_dict, example_dicts);
@@ -93,7 +93,7 @@ else {
 	current_dict.clean_f();
 	current_dict.clean_greek();
 	current_dict.repair_broken_words();
-	let repeat_count = process.argv[3];
+	let repeat_count = Number(process.argv[3]);
 	let extraWords = extra_words(current_dict.words, example_dicts.words, repeat_count);
 	let not_rigth_order = is_in_right_order(current_dict, example_dicts);
 	let not_compatible = is_two_compatible(current_dict, example_dicts);
