@@ -415,7 +415,7 @@ function view() {
 	}
 	if (not_compatible.length != 0) {
 		str += '<h3>Возможно несочетаемы:</h3><br><h4> Всего ' +
-		not_compatible.length + '</h4><br>' + not_in_right_order.join('<br>') + '<br>' + not_compatible.join('<br>');
+		not_compatible.length + '</h4><br>' + not_compatible.join('<br>') + '<br>';
 	}
 	document.getElementById('compare-result').innerHTML = str;
 }
