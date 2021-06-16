@@ -11,6 +11,7 @@ var two_word_ext = require('../common/two_word_ext.js');
 var is_in_right_order = require('../common/is_in_right_order.js');
 var is_two_compatible = require('../common/is_two_compatible.js');
 var clean_text = require('../common/clean_text.js').clean_with_replace;
+var tex_cleaner = require('../common/tex_cleaner.js');
 var extra_words = require('../common/extra_words.js');
 var $ = require('jquery-with-bootstrap-for-browserify');
 var MainDictionary = new Dictionary({});
@@ -139,6 +140,46 @@ function createDictionaryTxt(files) {
 	readFile(0);
 }
 
+function createDictionaryTex(files) {
+	let texts = [];
+	let dictionaries = [];
+	var reader = new FileReader();
+	function readFile(index) {
+		if( index >= files.length ) {
+			return;
+		}
+		var file = files[index];
+		reader.onload = function(e) {
+			var bin = e.target.result;
+			texts.push(bin);
+			readFile(index+1)
+		}
+		reader.readAsText(file);
+		reader.onloadend = function(e) {
+			if (index == files.length-1){
+				for(let i = 0; i < texts.length; i++){
+					dictionaries.push(new Dictionary({
+						text: tex_cleaner(texts[i].normalize('NFKC'))
+					}));
+					word_ext(dictionaries[i].text.toLowerCase(), dictionaries[i].words);
+					dictionaries[i].two_words = two_word_ext(dictionaries[i].text.toLowerCase());
+					dictionaries[i].word_count();
+					if(document.getElementById("repair-broken-words").checked) {
+						dictionaries[i].repair_broken_words();
+					}
+					dictionaries[i].clean_f();
+					if(document.getElementById("clean-greek").checked) {
+						dictionaries[i].clean_greek();
+					}
+				}
+				MainDictionary = dictionary_union(MainDictionary, dictionaries);
+				fileSaveDelayed();
+			}
+		}
+	}
+	readFile(0);
+}
+
 function compareWithDictionary(file) {
 	rare_count = 1 * $('#rare-less-than').val();
 	tmp_dict = new Dictionary({});
@@ -201,6 +242,36 @@ function compareTxtWithDictionary(file) {
 	reader.readAsText(file);
 }
 
+function compareTexWithDictionary(file) {
+	rare_count = 1 * $('#rare-less-than').val();
+	tmp_dict = new Dictionary({});
+	not_in_right_order = [];
+	not_compatible = [];
+	if (rare_count <= 0) {
+		rare_count = 2;
+	}
+	let reader = new FileReader();
+	reader.onload = function(e) {
+		var bin = e.target.result;
+		tmp_dict.text = tex_cleaner(bin.normalize('NFKC'));
+		word_ext(tmp_dict.text.toLowerCase(), tmp_dict.words);
+		tmp_dict.two_words = two_word_ext(tmp_dict.text.toLowerCase());
+		tmp_dict.word_count();
+		if(document.getElementById("repair-broken-words").checked) {
+			tmp_dict.repair_broken_words();
+		}
+		tmp_dict.clean_f();
+		if(document.getElementById("clean-greek").checked) {
+			tmp_dict.clean_greek();
+		}
+		dict_info = extra_words(tmp_dict.words, MainDictionary.words, rare_count);
+		not_in_right_order = Object.keys(is_in_right_order(tmp_dict, MainDictionary));
+		not_compatible = Object.keys(is_two_compatible(tmp_dict, MainDictionary));
+		viewDictInfo();
+	}
+	reader.readAsText(file);
+}
+
 function compareReload () {
 	rare_count = 1 * $('#rare-less-than').val();
 	if (rare_count <= 0) {
@@ -227,7 +298,8 @@ function fileLoad() {
 	let Files = document.getElementById('file-load').files;
 	let FilesPdf = [],
 		FilesJSON = [],
-		FilesTXT = [];
+		FilesTXT = [],
+		FilesTEX = [];
 	for (let i = 0; i < Files.length; i++) {
 		if (Files[i].name.slice(-4).toLowerCase() == ".pdf") {
 			FilesPdf.push(Files[i]);
@@ -237,6 +309,9 @@ function fileLoad() {
 		}
 		else if (Files[i].name.slice(-4).toLowerCase() == ".txt") {
 			FilesTXT.push(Files[i]);
+		}
+		else if (Files[i].name.slice(-4).toLowerCase() == ".tex") {
+			FilesTEX.push(Files[i]);
 		}
 	}
 	document.getElementById('span-save').innerHTML = 'Обработка...';
@@ -249,6 +324,9 @@ function fileLoad() {
 	if (FilesTXT[0]){
 		createDictionaryTxt(FilesTXT);
 	}
+	if (FilesTEX[0]){
+		createDictionaryTex(FilesTEX);
+	}
 }
 
 function fileLoadCompare() {
@@ -259,6 +337,9 @@ function fileLoadCompare() {
 	}
 	else if (file.name.slice(-4) == '.txt') {
 		compareTxtWithDictionary(file);
+	}
+	else if (file.name.slice(-4) == '.tex') {
+		compareTexWithDictionary(file);
 	}
 }
 window.fileLoad = fileLoad;
