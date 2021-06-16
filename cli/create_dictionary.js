@@ -20,7 +20,7 @@ var dictionary_create = function (files, dictionary_name) {
 	}
 	for (let i = 0; i < files.length; i++){
 		if (files[i].slice(-4) == '.txt') {
-			dictionary.text = clean_text(fs.readFileSync(files[i], 'utf-8').normalize('NFKC'));
+			dictionary.text += clean_text(fs.readFileSync(files[i], 'utf-8').normalize('NFKC'));
 			fs.writeFileSync(files[i].slice(0,-4) + "_clean.txt", dictionary.text, function(err){
 				if(err)
 					return console.log(err);
@@ -41,7 +41,7 @@ var dictionary_create = function (files, dictionary_name) {
 			}
 		}
 		else if (files[i].slice(-4) == '.tex'){
-			dictionary.text = tex_cleaner(fs.readFileSync(files[i], 'utf-8').normalize('NFKC'));
+			dictionary.text += tex_cleaner(fs.readFileSync(files[i], 'utf-8').normalize('NFKC'));
 			fs.writeFileSync(files[i].slice(0,-4) + "_clean.txt", dictionary.text, function(err){
 				if(err)
 					return console.log(err);
@@ -63,7 +63,7 @@ var dictionary_create = function (files, dictionary_name) {
 		}
 		else {
 			pdf(pdfjsLib, fs.readFileSync(files[i]), function(text){
-				dictionary.text = clean_text(text.normalize('NFKC'));
+				dictionary.text += clean_text(text.normalize('NFKC'));
 				fs.writeFileSync(files[i].slice(0,-4) + ".txt", dictionary.text, function(err){
 					if(err)
 						return console.log(err);
