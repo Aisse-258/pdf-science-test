@@ -83,6 +83,27 @@ var tex_cleaner = function(data) {
 			clean_data.nodes.splice(formulaIndexes.begin,formulaIndexes.end-formulaIndexes.begin+1,{text:'FFFFFF',type:null});
 		}
 	}
+	for(let i = clean_data.nodes.length-5;i > -1;i--){//убираем формулы в multline
+		if(!clean_data.nodes[i+1] || !clean_data.nodes[i+2] || !clean_data.nodes[i+3] || !clean_data.nodes[i+4]) {
+			continue;
+		}
+		if(clean_data.nodes[i].text + clean_data.nodes[i+1].text +
+			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text == '\\end{multline}') {
+			formulaIndexes.end = i+3;
+		}
+		else if(clean_data.nodes[i].text + clean_data.nodes[i+1].text +
+			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text + clean_data.nodes[i+4].text == '\\end{multline*}') {
+			formulaIndexes.end = i+4;
+		}
+		else if(clean_data.nodes[i].text + clean_data.nodes[i+1].text +
+			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text == '\\begin{multline}'
+			||
+			clean_data.nodes[i].text + clean_data.nodes[i+1].text +
+			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text + clean_data.nodes[i+4].text == '\\begin{multline*}'){
+			formulaIndexes.begin = i;
+			clean_data.nodes.splice(formulaIndexes.begin,formulaIndexes.end-formulaIndexes.begin+1,{text:'FFFFFF',type:null});
+		}
+	}
 	for(let i = clean_data.nodes.length-1;i > 1;i--){//удаляем квадратные скобки с опциями
 		if(clean_data.nodes[i].text == '[' && (clean_data.nodes[i-1].type == 'tag' || clean_data.nodes[i-1].text == '}')) {
 			let j = i+2;
