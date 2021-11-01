@@ -46,11 +46,12 @@ var tex_cleaner = function(data) {
 			continue;
 		}
 		if(clean_data.nodes[i].text + clean_data.nodes[i+1].text +
-			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text == '\\end{equation}'
-			||
-			clean_data.nodes[i].text + clean_data.nodes[i+1].text +
-			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text + clean_data.nodes[i+4].text == '\\end{equation*}') {
+			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text == '\\end{equation}') {
 			formulaIndexes.end = i+3;
+		}
+		else if(clean_data.nodes[i].text + clean_data.nodes[i+1].text +
+			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text + clean_data.nodes[i+4].text == '\\end{equation*}') {
+			formulaIndexes.end = i+4;
 		}
 		else if(clean_data.nodes[i].text + clean_data.nodes[i+1].text +
 			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text == '\\begin{equation}'
