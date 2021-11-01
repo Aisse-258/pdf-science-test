@@ -42,6 +42,9 @@ var tex_cleaner = function(data) {
 		}
 	}
 	for(let i = clean_data.nodes.length-5;i > -1;i--){//убираем формулы в equation
+		if(!clean_data.nodes[i+1] || !clean_data.nodes[i+2] || !clean_data.nodes[i+3] || !clean_data.nodes[i+4]) {
+			continue;
+		}
 		if(clean_data.nodes[i].text + clean_data.nodes[i+1].text +
 			clean_data.nodes[i+2].text + clean_data.nodes[i+3].text == '\\end{equation}'
 			||
